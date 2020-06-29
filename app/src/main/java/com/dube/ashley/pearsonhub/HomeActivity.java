@@ -12,5 +12,4 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
     }
 }
-
-//testing connection again
+//Changes at 15h15 by Ashley
