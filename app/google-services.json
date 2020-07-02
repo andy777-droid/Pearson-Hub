@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "691188221878",
+    "firebase_url": "https://itsp300-2020.firebaseio.com",
+    "project_id": "itsp300-2020",
+    "storage_bucket": "itsp300-2020.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:691188221878:android:0ba0e2c9b768c11e97a317",
+        "android_client_info": {
+          "package_name": "com.dube.ashley.pearsonhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "691188221878-muav5gbjhcf9vvd5n8dbebtli365r3j4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnOOzgTsC66ItCz2CctjVO5QEzAOXmduU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "691188221878-muav5gbjhcf9vvd5n8dbebtli365r3j4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
