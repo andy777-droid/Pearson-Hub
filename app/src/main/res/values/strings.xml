@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Pearson HUB</string>
+    <string name="intro_first_line">The Easy shopping solution</string>
+    <string name="intro_second_line">Shop is in your hand now</string>
+    <string name="loginBtn">Login</string>
+    <string name="registerBtn">Register</string>
 </resources>
