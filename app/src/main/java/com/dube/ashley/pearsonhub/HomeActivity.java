@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity
                 Intent intentMain= new Intent(HomeActivity.this,LoginActivity.class);
                 startActivity(intentMain);
 
-                //hi
+                //hithere
             }
         });
     }
