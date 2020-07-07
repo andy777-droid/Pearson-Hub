@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivity">
 
     <EditText
         android:id="@+id/editTextTextEmailAddress"
@@ -17,7 +17,7 @@
         android:layout_marginRight="40dp"
         android:layout_marginBottom="505dp"
         android:ems="10"
-        android:hint="@string/enter_email"
+        android:hint="Enter Email"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
         android:layout_marginRight="40dp"
         android:layout_marginBottom="433dp"
         android:ems="10"
-        android:hint="@string/enter_password"
+        android:hint="Enter Password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +54,7 @@
         android:layout_marginLeft="176dp"
         android:layout_marginEnd="177dp"
         android:layout_marginRight="177dp"
-        android:text="@string/not_registered_sign_up_here"
+        android:text="Not Registered Sign Up Here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.442"
@@ -66,7 +66,7 @@
         android:id="@+id/signInBTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sign_in"
+        android:text="Sign In"
         app:layout_constraintBottom_toTopOf="@+id/signUpTV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
