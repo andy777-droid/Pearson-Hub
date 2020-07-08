@@ -20,6 +20,7 @@ public class HomeActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         signOutBTN=findViewById(R.id.logOutBTN);
 
         signOutBTN.setOnClickListener(new View.OnClickListener()
@@ -30,8 +31,6 @@ public class HomeActivity extends AppCompatActivity
                 FirebaseAuth.getInstance().signOut();
                 Intent intentMain= new Intent(HomeActivity.this,LoginActivity.class);
                 startActivity(intentMain);
-
-                //hithere
             }
         });
     }
