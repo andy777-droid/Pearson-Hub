@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +23,7 @@ public class LoginActivity extends AppCompatActivity
 {
     EditText emailId, passwordTXT;
     Button btnSignIn;
-    TextView SignUp;
+    TextView SignUp, resetPsw;
     FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
@@ -33,7 +35,17 @@ public class LoginActivity extends AppCompatActivity
         mFirebaseAuth = FirebaseAuth.getInstance();
         emailId=findViewById(R.id.editTextTextEmailAddress);
         passwordTXT=findViewById(R.id.editTextTextPassword);
+
         SignUp=findViewById(R.id.signUpTV);
+        SpannableString content1 = new SpannableString("Create Account");
+        content1.setSpan(new UnderlineSpan(), 0, content1.length(), 0);
+        SignUp.setText(content1);
+
+        resetPsw=findViewById(R.id.linkForgot);
+        SpannableString content2 = new SpannableString("Forgot Password?");
+        content2.setSpan(new UnderlineSpan(), 0, content2.length(), 0);
+        resetPsw.setText(content2);
+
         btnSignIn=findViewById(R.id.signInBTN);
 
         mAuthStateListener= new FirebaseAuth.AuthStateListener()
@@ -51,6 +63,7 @@ public class LoginActivity extends AppCompatActivity
 
             }
         };
+
         btnSignIn.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -116,6 +129,16 @@ public class LoginActivity extends AppCompatActivity
             {
                 Intent intentSignUp=new Intent(LoginActivity.this,SignUpActivity.class);
                 startActivity(intentSignUp);
+            }
+        });
+
+        resetPsw.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intentReset=new Intent(LoginActivity.this,ResetPassword.class);
+                startActivity(intentReset);
             }
         });
 
