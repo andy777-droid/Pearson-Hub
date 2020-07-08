@@ -42,13 +42,16 @@ public class LoginActivity extends AppCompatActivity
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
             {
                 FirebaseUser mFirebaseUser =mFirebaseAuth.getCurrentUser();
-                if(mFirebaseUser != null && mFirebaseUser.isEmailVerified())
+                if(mFirebaseUser != null)
                 {
                     Toast.makeText(LoginActivity.this,"You're logged in",Toast.LENGTH_SHORT).show();
                     Intent i=new Intent(LoginActivity.this,HomeActivity.class);
                     startActivity(i);
                 }
-
+                else
+                {
+                    Toast.makeText(LoginActivity.this,"Please Log In",Toast.LENGTH_SHORT).show();
+                }
             }
         };
         btnSignIn.setOnClickListener(new View.OnClickListener()
@@ -86,16 +89,8 @@ public class LoginActivity extends AppCompatActivity
                            }
                            else
                            {
-                               if(mFirebaseAuth.getCurrentUser().isEmailVerified())
-                               {
-                                   Intent intentHome=new Intent(LoginActivity.this,HomeActivity.class);
-                                   startActivity(intentHome);
-                               }
-                               else
-                               {
-                                   Toast.makeText(LoginActivity.this,"Please verify your email address",Toast.LENGTH_LONG).show();
-                               }
-
+                               Intent intentHome=new Intent(LoginActivity.this,HomeActivity.class);
+                               startActivity(intentHome);
                            }
                         }
                     });
@@ -126,5 +121,6 @@ public class LoginActivity extends AppCompatActivity
     {
         super.onStart();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+
     }
 }

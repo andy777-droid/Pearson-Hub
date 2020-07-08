@@ -2,6 +2,8 @@ package com.dube.ashley.pearsonhub;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -48,16 +50,22 @@ public class SignUpActivity extends AppCompatActivity
 
     public void registerNewUser()
     {
-
-        initialize();//initialize the input to string variables
-
-        if(!validate())
+        if (mAuth.getCurrentUser()!=null)
         {
-            Toast.makeText(this,"Signup has failed", Toast.LENGTH_LONG).show();
+            //The user is registered and can be directed to another activity.
         }
         else
         {
-            onSignupSuccess();
+            initialize();//intialize the input to string variables
+
+            if(!validate())
+            {
+                Toast.makeText(this,"Signup has failed", Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                onSignupSuccess();
+            }
         }
 
     }
@@ -71,40 +79,25 @@ public class SignUpActivity extends AppCompatActivity
             {
                 if (task.isSuccessful())
                 {
-                   mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>()
+                   User user=new User(ETfirstName, ETlastName, ETeditTextTextEmailAddress, ETcellNumber);
+                   FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>()
                    {
                        @Override
-                       public void onComplete(@NonNull Task<Void> tasks)
+                       public void onComplete(@NonNull Task<Void> task)
                        {
-                           if(tasks.isSuccessful())
+                           if(task.isSuccessful())
                            {
-                               User user=new User(ETfirstName, ETlastName, ETeditTextTextEmailAddress, ETcellNumber);
-                               FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>()
-                               {
-                                   @Override
-                                   public void onComplete(@NonNull Task<Void> work)
-                                   {
-                                       if(work.isSuccessful())
-                                       {
-                                           Toast.makeText(SignUpActivity.this,"Registration Successful, please click the link that has been emailed to you",Toast.LENGTH_LONG).show();
-                                       }
-                                       else
-                                       {
-                                           Toast.makeText(SignUpActivity.this,work.getException().getMessage(),Toast.LENGTH_LONG).show();
-                                       }
-
-                                   }
-                               });
-
+                               Toast.makeText(SignUpActivity.this,"Registration Successful",Toast.LENGTH_LONG).show();
+                               Intent intentHome=new Intent(SignUpActivity .this,HomeActivity.class);
+                               startActivity(intentHome);
                            }
                            else
                            {
-                               Toast.makeText(SignUpActivity.this,tasks.getException().getMessage(),Toast.LENGTH_LONG).show();
+                               Toast.makeText(SignUpActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
                            }
 
                        }
                    });
-
                 }
                 else
                 {
