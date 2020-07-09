@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="176dp"
         android:layout_marginLeft="176dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="177dp"
         android:layout_marginRight="177dp"
         android:text="Create Account"
@@ -41,11 +41,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signInBTN" />
+        app:layout_constraintTop_toBottomOf="@+id/googleLogin" />
 
     <Button
         android:id="@+id/signInBTN"
-        android:layout_width="200dp"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:background="@drawable/rounded_button"
@@ -58,13 +58,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
+    <Button
+        android:id="@+id/googleLogin"
+        android:layout_width="230dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_button"
+        android:drawableLeft="@drawable/googleg_standard_color_18"
+        android:paddingLeft="8dip"
+        android:text="Login With Google"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signInBTN" />
+
+
     <TextView
         android:id="@+id/linkForgot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="25dp"
         android:text="Forgot Password?"
         android:textColor="#008aa3"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUpTV" />
