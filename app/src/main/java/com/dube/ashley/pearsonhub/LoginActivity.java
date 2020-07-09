@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity
                 }
                 else if (passwrd.isEmpty())
                 {
-                    passwordTXT.setError("Please enter your email address");
+                    passwordTXT.setError("Please enter your password");
                     passwordTXT.requestFocus();
                 }
                 else if(email.isEmpty() && passwrd.isEmpty())
