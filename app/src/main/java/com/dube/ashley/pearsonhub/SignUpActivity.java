@@ -79,24 +79,7 @@ public class SignUpActivity extends AppCompatActivity
                        {
                            if(tasks.isSuccessful())
                            {
-                               User user=new User(ETfirstName, ETlastName, ETeditTextTextEmailAddress, ETcellNumber);
-                               FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>()
-                               {
-                                   @Override
-                                   public void onComplete(@NonNull Task<Void> work)
-                                   {
-                                       if(work.isSuccessful())
-                                       {
-                                           Toast.makeText(SignUpActivity.this,"Registration Successful, please click the link that has been emailed to you",Toast.LENGTH_LONG).show();
-                                       }
-                                       else
-                                       {
-                                           Toast.makeText(SignUpActivity.this,work.getException().getMessage(),Toast.LENGTH_LONG).show();
-                                       }
-
-                                   }
-                               });
-
+                               Toast.makeText(SignUpActivity.this,"Registration Successful, please click the link that has been emailed to you",Toast.LENGTH_LONG).show();
                            }
                            else
                            {
