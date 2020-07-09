@@ -48,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity
 
     public void registerNewUser()
     {
+        //c
 
         initialize();//initialize the input to string variables
 
