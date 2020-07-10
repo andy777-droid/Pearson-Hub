@@ -2,6 +2,8 @@ package com.dube.ashley.pearsonhub;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -13,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity
@@ -21,6 +24,8 @@ public class SignUpActivity extends AppCompatActivity
     private String ETfirstName, ETlastName, ETeditTextTextEmailAddress, ETeditTextTextPassword, ETeditTextTextPassword2, ETcellNumber;
     Button laysignUpBTN;
     private FirebaseAuth mAuth;
+    DatabaseReference reff;
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -35,6 +40,7 @@ public class SignUpActivity extends AppCompatActivity
         eteditTextTextPassword2= (EditText) findViewById(R.id.editTextTextPassword2);
         etcellNumber= (EditText) findViewById(R.id.cellNumber);
         laysignUpBTN= (Button) findViewById(R.id.signUpBTN);
+        user = new User();
 
         laysignUpBTN.setOnClickListener(new View.OnClickListener()
         {
@@ -48,8 +54,6 @@ public class SignUpActivity extends AppCompatActivity
 
     public void registerNewUser()
     {
-        //c
-
         initialize();//initialize the input to string variables
 
         if(!validate())
@@ -77,9 +81,15 @@ public class SignUpActivity extends AppCompatActivity
                        @Override
                        public void onComplete(@NonNull Task<Void> tasks)
                        {
+
+                           user = new User(ETfirstName, ETlastName, ETeditTextTextEmailAddress, ETcellNumber);
+                           reff = FirebaseDatabase.getInstance().getReference().child("Users");
+                           reff.push().setValue(user);
+
                            if(tasks.isSuccessful())
                            {
                                Toast.makeText(SignUpActivity.this,"Registration Successful, please click the link that has been emailed to you",Toast.LENGTH_LONG).show();
+                               setContentView(R.layout.activity_login);
                            }
                            else
                            {
