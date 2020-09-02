@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
@@ -13,6 +14,7 @@ public class ImageAdapter extends PagerAdapter {
 
     private Context mContext;
     private int[] images = new int[] {R.drawable.business, R.drawable.science, R.drawable.maths, R.drawable.english};
+    private String[] book_names = new String[] {"Business Management", "Science", "Mathematics", "English Language"};
 
     ImageAdapter(Context context){
       mContext = context;
@@ -31,7 +33,7 @@ public class ImageAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         ImageView imageView = new ImageView(mContext);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView.setImageResource(images[position]);
         container.addView(imageView, 0);
         return imageView;
