@@ -143,7 +143,6 @@ public class LoginActivity extends AppCompatActivity
                             } //Dev was here
                         }
                     });
-
                 }
                 else
                 {
