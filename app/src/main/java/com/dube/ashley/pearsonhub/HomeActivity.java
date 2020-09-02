@@ -1,6 +1,7 @@
 package com.dube.ashley.pearsonhub;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity
 {
@@ -29,6 +29,10 @@ public class HomeActivity extends AppCompatActivity
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_home);
+
+            ViewPager viewPager = findViewById(R.id.viewPager);
+            ImageAdapter adapter = new ImageAdapter(this);
+            viewPager.setAdapter(adapter);
 
             //GOOGLE LOG OUT
             logout = findViewById(R.id.google_log_out);

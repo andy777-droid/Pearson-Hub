@@ -5,56 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
+    
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <Button
         android:id="@+id/logOutBTN"
         android:layout_width="235dp"
         android:layout_height="45dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_button"
         android:text="Logout"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="22dp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/google_log_out" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/google_log_out"
         android:layout_width="235dp"
         android:layout_height="45dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/rounded_button"
         android:text="Google Logout"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="22dp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/logOutBTN"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userMail" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
         android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/userMail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/userMail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
         android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/google_log_out"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
