@@ -2,7 +2,6 @@ package com.dube.ashley.pearsonhub;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +13,8 @@ public class HomeActivity extends AppCompatActivity
     Button signOutBTN;
     FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-
+    private ViewPager viewPager;
+    private SliderAdapter sliderAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -23,23 +23,23 @@ public class HomeActivity extends AppCompatActivity
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_home);
 
-            ViewPager viewPager = findViewById(R.id.viewPager);
-            ImageAdapter adapter = new ImageAdapter(this);
-            viewPager.setAdapter(adapter);
+            viewPager = (ViewPager) findViewById(R.id.SlideViewPager);
+            sliderAdapter = new SliderAdapter(this);
+          viewPager.setAdapter(sliderAdapter);
+            //signOutBTN=findViewById(R.id.logOutBTN);
 
-            signOutBTN=findViewById(R.id.logOutBTN);
-
-            signOutBTN.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    FirebaseAuth.getInstance().signOut();
-                    Intent intentMain= new Intent(HomeActivity.this,LoginActivity.class);
-                    startActivity(intentMain);
-                }
-            });
+//            signOutBTN.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    FirebaseAuth.getInstance().signOut();
+//                    Intent intentMain= new Intent(HomeActivity.this,LoginActivity.class);
+//                    startActivity(intentMain);
+//                }
+//            });
 
 
     }
+
 }
