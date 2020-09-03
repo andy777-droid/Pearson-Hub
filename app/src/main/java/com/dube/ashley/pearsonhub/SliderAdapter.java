@@ -20,9 +20,9 @@ public class SliderAdapter extends PagerAdapter {
         this.context = context;
     }
 
-    public int[] slider_images = {R.drawable.english, R.drawable.maths, R.drawable.science, R.drawable.business};
-    public String[] slider_titles = {"English", "Mathematics", "Science", "Business Management"};
-    public String[] slider_prices = {"700", "500", "650", "450"};
+    public int[] slider_images = {R.drawable.accounting, R.drawable.arts, R.drawable.english, R.drawable.maths, R.drawable.science, R.drawable.business};
+    public String[] slider_titles = {"Accounting", "Arts and Culture", "English", "Mathematics", "Science", "Business Management"};
+    public String[] slider_prices = {"750", "550", "650", "450", "350", "480"};
 
     @Override
     public int getCount() {
