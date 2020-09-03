@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Pearson HUB</string>
+    <string name="todo">TODO</string>
+    <string name="logout">Logout</string>
+    <string name="heading">Heading</string>
+    <string name="r">R</string>
 </resources>
