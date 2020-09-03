@@ -127,9 +127,7 @@
                 android:id="@+id/button1"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@drawable/rounded_button"
-                android:drawableLeft="@drawable/mailwhitenew"
-                android:paddingLeft="30px"
+                android:background="@drawable/category_buttons"
                 android:text="Contact"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
@@ -145,9 +143,7 @@
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@drawable/rounded_button"
-                android:drawableLeft="@drawable/ic_wishlist"
-                android:paddingLeft="40px"
+                android:background="@drawable/category_buttons"
                 android:text="Wishlist"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
