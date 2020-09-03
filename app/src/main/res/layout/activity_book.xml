@@ -128,6 +128,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/category_buttons"
+                android:drawableLeft="@drawable/mailwhitenew"
+                android:paddingLeft="40px"
                 android:text="Contact"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
@@ -144,6 +146,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/category_buttons"
+                android:drawableLeft="@drawable/ic_wishlist"
+                android:paddingLeft="50px"
                 android:text="Wishlist"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
