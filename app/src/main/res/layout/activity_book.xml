@@ -16,6 +16,7 @@
     tools:context=".Book">
 
 
+    
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="269dp"
