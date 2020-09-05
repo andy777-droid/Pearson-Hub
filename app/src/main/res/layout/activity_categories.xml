@@ -8,30 +8,37 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="5dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/categoryName"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="25dp"
-            android:gravity="center_horizontal"
-            android:text="Category Name Here"
-            android:textColor="#000000"
-            android:textSize="24dp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_id"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/categoryName"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="25dp"
+                android:gravity="center_horizontal"
+                android:text="Category Name Here"
+                android:textColor="#000000"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_id"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/categoryName"
+                android:layout_marginTop="0dp"></androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
+    </ScrollView>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
@@ -41,6 +48,6 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/navigation_header"
         app:menu="@menu/drawer_menu"
-        app:theme="@style/NavigationViewStyle"/>
+        app:theme="@style/NavigationViewStyle" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
