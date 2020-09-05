@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
             if (mFirebaseUser != null && mFirebaseUser.isEmailVerified()) {
               Toast.makeText(LoginActivity.this, "You're logged in", Toast.LENGTH_SHORT).show();
-              Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+              Intent i = new Intent(LoginActivity.this, Categories.class);
               startActivity(i);
             }
           }
@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (mFirebaseAuth.getCurrentUser().isEmailVerified()) {
 
                                    Intent intentHome =
-                                  new Intent(LoginActivity.this, HomeActivity.class);
+                                  new Intent(LoginActivity.this, Categories.class);
                               startActivity(intentHome);
                             } else {
                               Toast.makeText(

@@ -15,6 +15,38 @@
       },
       "oauth_client": [
         {
+          "client_id": "691188221878-1bnocm2s6ccdvqv9tb5ak1agd4iepbcc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dube.ashley.pearsonhub",
+            "certificate_hash": "fa127bd68577e9328f6f42dde0efcc1288cb49df"
+          }
+        },
+        {
+          "client_id": "691188221878-vt5did9esqjaninn721fppv0qo2gg7rv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dube.ashley.pearsonhub",
+            "certificate_hash": "2942b2031632c5bd341bb42a9c89a4f9e250c615"
+          }
+        },
+        {
+          "client_id": "691188221878-6ghp55ru60t0t7bf197uc0enviqboq43.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dube.ashley.pearsonhub",
+            "certificate_hash": "86ba94bcc6360c30867210f7bac7437e5caffb77"
+          }
+        },
+        {
+          "client_id": "691188221878-p4e6e2hj9auv5leapactfh5oaupgc7o5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dube.ashley.pearsonhub",
+            "certificate_hash": "db51a33e120d4dd6291ba9dca0277a5f7870c4e8"
+          }
+        },
+        {
           "client_id": "691188221878-muav5gbjhcf9vvd5n8dbebtli365r3j4.apps.googleusercontent.com",
           "client_type": 3
         }
