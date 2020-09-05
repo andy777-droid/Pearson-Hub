@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="230dp"
         android:layout_marginTop="20dp"
-        app:srcCompat="@drawable/business" />
+        app:srcCompat="@drawable/business"
+        />
 
     <TextView
         android:id="@+id/slider_title"
