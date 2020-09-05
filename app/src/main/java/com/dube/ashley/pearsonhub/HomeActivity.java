@@ -8,15 +8,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -30,12 +30,10 @@ public class HomeActivity extends AppCompatActivity {
   private TextView[] mdots;
   private DrawerLayout mdrawer;
   private ActionBarDrawerToggle mToggle;
-
-
+  private Button btn1;
 
   @Override
-  protected void onCreate(Bundle savedInstanceState)
-  {
+  protected void onCreate(Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
@@ -59,24 +57,36 @@ public class HomeActivity extends AppCompatActivity {
 
     mToggle.setDrawerArrowDrawable(new HamburgerDrawable(this));
 
+    btn1 = (Button) findViewById(R.id.button1);
+
+    btn1.setOnClickListener(
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                Intent intentSignUp = new Intent(HomeActivity.this, Categories.class);
+                startActivity(intentSignUp);
+              }
+            });
   }
 
-  public class HamburgerDrawable extends DrawerArrowDrawable
-  {
 
-    public HamburgerDrawable(Context context){
+
+
+
+  public class HamburgerDrawable extends DrawerArrowDrawable {
+
+    public HamburgerDrawable(Context context) {
       super(context);
       setColor(context.getResources().getColor(R.color.colorPrimary));
     }
 
     @Override
-    public void draw(Canvas canvas){
+    public void draw(Canvas canvas) {
       super.draw(canvas);
 
       setBarLength(100.0f);
       setBarThickness(16.0f);
       setGapSize(20.0f);
-
     }
   }
 

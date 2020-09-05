@@ -17,19 +17,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class LoginActivity extends AppCompatActivity
-{
+public class LoginActivity extends AppCompatActivity {
   EditText emailId, passwordTXT;
   Button btnSignIn;
   TextView SignUp, resetPsw;
   FirebaseAuth mFirebaseAuth;
   private FirebaseAuth.AuthStateListener mAuthStateListener;
-  public String valid_user = "lol";
 
   @Override
-  protected void onCreate(Bundle savedInstanceState)
-  {
+  protected void onCreate(Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
@@ -93,8 +92,7 @@ public class LoginActivity extends AppCompatActivity
                                 .show();
                           } else {
                             if (mFirebaseAuth.getCurrentUser().isEmailVerified()) {
-
-                                   Intent intentHome =
+                              Intent intentHome =
                                   new Intent(LoginActivity.this, HomeActivity.class);
                               startActivity(intentHome);
                             } else {
