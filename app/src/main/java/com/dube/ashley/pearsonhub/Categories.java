@@ -1,10 +1,17 @@
 package com.dube.ashley.pearsonhub;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.graphics.Canvas;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +19,8 @@ import java.util.List;
 public class Categories extends AppCompatActivity
 {
     List<CategoryHandler> catBooks;
+    private DrawerLayout mdrawer;
+    private ActionBarDrawerToggle mToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -19,9 +28,19 @@ public class Categories extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
+        mdrawer = (DrawerLayout) findViewById(R.id.id_drawer_layout);
+        mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
+
+        mdrawer.addDrawerListener(mToggle);
+        mToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("");
+        getSupportActionBar().setElevation(0);
+
         catBooks=new ArrayList<>();
 
-        /*catBooks.add(new CategoryHandler("Accounting",750,"Bcom","My Description",R.drawable.accounting));
+        catBooks.add(new CategoryHandler("Accounting",750,"Bcom","My Description",R.drawable.accounting));
         catBooks.add(new CategoryHandler("Arts and Culture",550,"BA","My Description",R.drawable.arts));
         catBooks.add(new CategoryHandler("English",650,"BA","My Description",R.drawable.english));
         catBooks.add(new CategoryHandler("Mathematics",450,"BSc","My Description",R.drawable.maths));
@@ -31,19 +50,8 @@ public class Categories extends AppCompatActivity
         catBooks.add(new CategoryHandler("English",650,"BA","My Description",R.drawable.english));
         catBooks.add(new CategoryHandler("Mathematics",450,"BSc","My Description",R.drawable.maths));
         catBooks.add(new CategoryHandler("Science",350,"BSc","My Description",R.drawable.science));
-        catBooks.add(new CategoryHandler("Business Management",480,"Bcom","My Description",R.drawable.business));*/
+        catBooks.add(new CategoryHandler("Business Management",480,"Bcom","My Description",R.drawable.business));
 
-        catBooks.add(new CategoryHandler("Accounting","Bcom","My Description",R.drawable.accounting));
-        catBooks.add(new CategoryHandler("Arts and Culture","BA","My Description",R.drawable.arts));
-        catBooks.add(new CategoryHandler("English","BA","My Description",R.drawable.english));
-        catBooks.add(new CategoryHandler("Mathematics","BSc","My Description",R.drawable.maths));
-        catBooks.add(new CategoryHandler("Science","BSc","My Description",R.drawable.science));
-        catBooks.add(new CategoryHandler("Business Management","Bcom","My Description",R.drawable.business));
-        catBooks.add(new CategoryHandler("Arts and Culture","BA","My Description",R.drawable.arts));
-        catBooks.add(new CategoryHandler("English","BA","My Description",R.drawable.english));
-        catBooks.add(new CategoryHandler("Mathematics","BSc","My Description",R.drawable.maths));
-        catBooks.add(new CategoryHandler("Science","BSc","My Description",R.drawable.science));
-        catBooks.add(new CategoryHandler("Business Management","Bcom","My Description",R.drawable.business));
 
         RecyclerView rv=(RecyclerView) findViewById(R.id.recyclerview_id);
         RecyclerViewAdapter rva=new RecyclerViewAdapter(this,catBooks);
@@ -52,4 +60,32 @@ public class Categories extends AppCompatActivity
 
 
     }
+    public class HamburgerDrawable extends DrawerArrowDrawable
+    {
+
+        public HamburgerDrawable(Context context){
+            super(context);
+            setColor(context.getResources().getColor(R.color.colorPrimary));
+        }
+
+        @Override
+        public void draw(Canvas canvas){
+            super.draw(canvas);
+
+            setBarLength(100.0f);
+            setBarThickness(16.0f);
+            setGapSize(20.0f);
+
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

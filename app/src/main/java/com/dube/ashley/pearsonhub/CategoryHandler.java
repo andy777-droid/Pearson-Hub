@@ -3,24 +3,24 @@ package com.dube.ashley.pearsonhub;
 public class CategoryHandler
 {
     private String title;
-    //private double price;
+    private float price;
     private String category;
     private String description;
     private int thumbnail;
 
     public CategoryHandler()
     {
-        
+
     }
 
-   // public CategoryHandler(String title,double price, String category, String description, int thumbnail)
-    public CategoryHandler(String title, String category, String description, int thumbnail)
+    public CategoryHandler(String title,float price, String category, String description, int thumbnail)
+    //public CategoryHandler(String title, String category, String description, int thumbnail)
     {
         this.title = title;
         this.category = category;
         this.description = description;
         this.thumbnail = thumbnail;
-        //this.price = price;
+        this.price = price;
     }
 
     public String getTitle() {
@@ -55,11 +55,12 @@ public class CategoryHandler
         this.thumbnail = thumbnail;
     }
 
-    /*public double getPrice() {
-        return price;
+    public String getPrice() {
+        String bookPrice=String.valueOf(price);
+        return bookPrice;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
-    }*/
+    }
 }

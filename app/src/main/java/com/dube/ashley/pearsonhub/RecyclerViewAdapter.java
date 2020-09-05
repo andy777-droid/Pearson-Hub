@@ -37,7 +37,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position)
     {
         holder.tv_book_title.setText(mData.get(position).getTitle());
-        //holder.tv_book_price.setText((int) mData.get(position).getPrice());
+        holder.tv_book_price.setText("R"+mData.get(position).getPrice());
         holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
     }
 
@@ -50,14 +50,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
     public static class MyViewHolder extends RecyclerView.ViewHolder
     {
         TextView tv_book_title;
-        //TextView tv_book_price;
+        TextView tv_book_price;
         ImageView img_book_thumbnail;
 
         public MyViewHolder(@NonNull View itemView)
         {
             super(itemView);
             tv_book_title=(TextView) itemView.findViewById(R.id.book_title_id);
-            //tv_book_price=(TextView) itemView.findViewById(R.id.book_Price_id);
+            tv_book_price=(TextView) itemView.findViewById(R.id.book_Price_id);
             img_book_thumbnail=(ImageView) itemView.findViewById(R.id.book_img_id);
         }
     }

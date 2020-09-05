@@ -18,7 +18,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity
+{
   EditText emailId, passwordTXT;
   Button btnSignIn;
   TextView SignUp, resetPsw;
@@ -27,7 +28,9 @@ public class LoginActivity extends AppCompatActivity {
   public String valid_user = "lol";
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState)
+  {
+
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
     mFirebaseAuth = FirebaseAuth.getInstance();
@@ -53,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
             FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
             if (mFirebaseUser != null && mFirebaseUser.isEmailVerified()) {
               Toast.makeText(LoginActivity.this, "You're logged in", Toast.LENGTH_SHORT).show();
-              Intent i = new Intent(LoginActivity.this, Categories.class);
+              Intent i = new Intent(LoginActivity.this, HomeActivity.class);
               startActivity(i);
             }
           }
@@ -92,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (mFirebaseAuth.getCurrentUser().isEmailVerified()) {
 
                                    Intent intentHome =
-                                  new Intent(LoginActivity.this, Categories.class);
+                                  new Intent(LoginActivity.this, HomeActivity.class);
                               startActivity(intentHome);
                             } else {
                               Toast.makeText(

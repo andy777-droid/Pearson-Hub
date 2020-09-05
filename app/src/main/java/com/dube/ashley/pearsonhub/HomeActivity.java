@@ -34,7 +34,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState)
+  {
+
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
 
@@ -59,7 +61,8 @@ public class HomeActivity extends AppCompatActivity {
 
   }
 
-  public class HamburgerDrawable extends DrawerArrowDrawable {
+  public class HamburgerDrawable extends DrawerArrowDrawable
+  {
 
     public HamburgerDrawable(Context context){
       super(context);
