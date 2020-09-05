@@ -12,8 +12,10 @@
         <activity android:name=".Wishlist"></activity>
         <activity android:name=".Categories" />
         <activity android:name=".Book" />
-        <activity android:name=".ResetPassword" />
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".ResetPassword"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".SignUpActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".HomeActivity" />
         <activity android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
