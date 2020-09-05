@@ -4,4 +4,6 @@
     <string name="logout">Logout</string>
     <string name="heading">Heading</string>
     <string name="r">R</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>
