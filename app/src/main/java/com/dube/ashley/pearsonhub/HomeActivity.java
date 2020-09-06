@@ -107,8 +107,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-
-
   public class HamburgerDrawable extends DrawerArrowDrawable {
 
     public HamburgerDrawable(Context context) {
