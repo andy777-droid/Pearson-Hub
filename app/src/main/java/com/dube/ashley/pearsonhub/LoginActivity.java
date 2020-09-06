@@ -95,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                               Intent intentHome =
                                   new Intent(LoginActivity.this, HomeActivity.class);
                               startActivity(intentHome);
+                              finish();
                             } else {
                               Toast.makeText(
                                       LoginActivity.this,

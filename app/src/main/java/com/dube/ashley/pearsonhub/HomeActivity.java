@@ -18,10 +18,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity {
   Button signOutBTN;
@@ -34,6 +40,9 @@ public class HomeActivity extends AppCompatActivity {
   private DrawerLayout mdrawer;
   private ActionBarDrawerToggle mToggle;
   private Button btn1;
+  private DatabaseReference databaseReference;
+  private FirebaseUser user;
+  String name;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +51,27 @@ public class HomeActivity extends AppCompatActivity {
     setContentView(R.layout.activity_home);
 
     mFirebaseAuth=FirebaseAuth.getInstance();
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String name = user.getUid();
+    user = FirebaseAuth.getInstance().getCurrentUser();
+    databaseReference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+    databaseReference.addValueEventListener(new ValueEventListener()
+    {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot snapshot)
+      {
+        User curUsers =snapshot.getValue(User.class);
+        assert curUsers != null;
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        View header = navigationView.getHeaderView(0);
+        TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
+        tv.setText( curUsers.getFirstname()+" "+curUsers.getLastname());
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError error)
+      {
+        Toast.makeText(HomeActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
+      }
+    });
 
     mdrawer = (DrawerLayout) findViewById(R.id.id_drawer_layout);
     mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
@@ -63,11 +91,6 @@ public class HomeActivity extends AppCompatActivity {
     viewPager.addOnPageChangeListener(viewListener);
 
     mToggle.setDrawerArrowDrawable(new HamburgerDrawable(this));
-
-    NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-    View header = navigationView.getHeaderView(0);
-    TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
-    tv.setText(name);
 
     btn1 = (Button) findViewById(R.id.button1);
 

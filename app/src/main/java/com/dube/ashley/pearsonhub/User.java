@@ -2,7 +2,7 @@ package com.dube.ashley.pearsonhub;
 
 public class User
 {
-    String firstname,lastname,email,cellNumber;
+    String userId,firstname,lastname,email,cellNumber;
 
     public User()
     {
@@ -11,6 +11,7 @@ public class User
 
     public User(String firstname, String lastname, String email, String cellNumber)
     {
+        this.userId = userId;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -47,5 +48,13 @@ public class User
 
     public void setCellNumber(String cellNumber) {
         this.cellNumber = cellNumber;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

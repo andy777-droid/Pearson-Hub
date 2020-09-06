@@ -15,8 +15,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity
 {
@@ -26,6 +29,7 @@ public class SignUpActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     DatabaseReference reff;
     User user;
+    private DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -82,20 +86,30 @@ public class SignUpActivity extends AppCompatActivity
                        public void onComplete(@NonNull Task<Void> tasks)
                        {
 
-                           user = new User(ETfirstName, ETlastName, ETeditTextTextEmailAddress, ETcellNumber);
-                           reff = FirebaseDatabase.getInstance().getReference().child("Users");
-                           reff.push().setValue(user);
-
-                           if(tasks.isSuccessful())
-                           {
-                               Toast.makeText(SignUpActivity.this,"Registration Successful, please click the link that has been emailed to you",Toast.LENGTH_LONG).show();
-                               setContentView(R.layout.activity_login);
-                           }
-                           else
-                           {
-                               Toast.makeText(SignUpActivity.this,tasks.getException().getMessage(),Toast.LENGTH_LONG).show();
-                           }
-
+                           FirebaseUser theUser=mAuth.getCurrentUser();
+                           String userId=theUser.getUid();
+                           databaseReference=FirebaseDatabase.getInstance().getReference("Users").child(userId);
+                           HashMap<String,String> hashMap=new HashMap<>();
+                           hashMap.put("userId",userId);
+                           hashMap.put("firstname",ETfirstName);
+                           hashMap.put("lastname",ETlastName);
+                           hashMap.put("email",ETeditTextTextEmailAddress);
+                           hashMap.put("cellNumber",ETcellNumber);
+                           databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                               @Override
+                               public void onComplete(@NonNull Task<Void> task)
+                               {
+                                   if(task.isSuccessful())
+                                   {
+                                       Toast.makeText(SignUpActivity.this,"Registration Successful, please click the link that has been emailed to you",Toast.LENGTH_LONG).show();
+                                       setContentView(R.layout.activity_login);
+                                   }
+                                   else
+                                   {
+                                       Toast.makeText(SignUpActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                   }
+                               }
+                           });
                        }
                    });
 
