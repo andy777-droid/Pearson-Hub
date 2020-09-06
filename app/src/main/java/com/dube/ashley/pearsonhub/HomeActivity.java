@@ -12,13 +12,16 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity {
   Button signOutBTN;
@@ -37,6 +40,10 @@ public class HomeActivity extends AppCompatActivity {
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
+
+    mFirebaseAuth=FirebaseAuth.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String name = user.getUid();
 
     mdrawer = (DrawerLayout) findViewById(R.id.id_drawer_layout);
     mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
@@ -57,6 +64,11 @@ public class HomeActivity extends AppCompatActivity {
 
     mToggle.setDrawerArrowDrawable(new HamburgerDrawable(this));
 
+    NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+    View header = navigationView.getHeaderView(0);
+    TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
+    tv.setText(name);
+
     btn1 = (Button) findViewById(R.id.button1);
 
     btn1.setOnClickListener(
@@ -67,6 +79,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intentSignUp);
               }
             });
+
   }
 
 

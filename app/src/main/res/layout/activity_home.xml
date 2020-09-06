@@ -173,4 +173,7 @@
         app:menu="@menu/drawer_menu"
         app:theme="@style/NavigationViewStyle"/>
 
+
+
+
 </androidx.drawerlayout.widget.DrawerLayout>

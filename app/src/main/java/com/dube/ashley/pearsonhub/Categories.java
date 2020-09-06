@@ -4,18 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
-import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +29,7 @@ public class Categories extends AppCompatActivity
         setContentView(R.layout.activity_categories);
         RecyclerView v = (RecyclerView) findViewById(R.id.recyclerview_id);
         v.setNestedScrollingEnabled(false);
+
         mdrawer = (DrawerLayout) findViewById(R.id.id_drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
 
@@ -64,6 +61,7 @@ public class Categories extends AppCompatActivity
         rv.setAdapter(rva);
 
         mToggle.setDrawerArrowDrawable(new Categories.HamburgerDrawable(this));
+
 
     }
     public class HamburgerDrawable extends DrawerArrowDrawable
