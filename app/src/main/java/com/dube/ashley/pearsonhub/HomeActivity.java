@@ -1,6 +1,7 @@
 package com.dube.ashley.pearsonhub;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
@@ -10,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
@@ -42,6 +44,7 @@ public class HomeActivity extends AppCompatActivity {
   private FirebaseUser user;
   String name;
 
+  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 
@@ -182,17 +185,17 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   ViewPager.OnPageChangeListener viewListener =
-      new ViewPager.OnPageChangeListener() {
+          new ViewPager.OnPageChangeListener() {
 
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
-        @Override
-        public void onPageSelected(int position) {
-          addDotsSlider(position);
-        }
+            @Override
+            public void onPageSelected(int position) {
+              addDotsSlider(position);
+            }
 
-        @Override
-        public void onPageScrollStateChanged(int state) {}
-      };
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+          };
 }
