@@ -7,20 +7,16 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#FFFFFF">
-
-
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="20dp"
             tools:context=".HomeActivity">
-
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/SlideViewPager"
@@ -137,6 +133,7 @@
                         android:background="@drawable/category_buttons"
                         android:text="Laws"
                         android:textColor="#FFFFFF"
+                        android:layout_marginBottom="30px"
                         android:textSize="20sp" />
                 </LinearLayout>
 
@@ -153,6 +150,7 @@
                         android:background="@drawable/category_buttons"
                         android:text="Arts and Culture"
                         android:textColor="#FFFFFF"
+                        android:layout_marginBottom="30px"
                         android:textSize="20sp" />
                 </LinearLayout>
             </GridLayout>
@@ -171,9 +169,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/navigation_header"
         app:menu="@menu/drawer_menu"
-        app:theme="@style/NavigationViewStyle"/>
-
-
+        app:theme="@style/NavigationViewStyle" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -35,11 +34,12 @@ public class HomeActivity extends AppCompatActivity {
   private FirebaseAuth.AuthStateListener mAuthStateListener;
   private ViewPager viewPager;
   private SliderAdapter sliderAdapter;
+  private NavigationView navigationView;
   private LinearLayout mDotsSlider;
   private TextView[] mdots;
   private DrawerLayout mdrawer;
   private ActionBarDrawerToggle mToggle;
-  private Button btn1;
+  private Button btn1, btn2;
   private DatabaseReference databaseReference;
   private FirebaseUser user;
   String name;
@@ -98,13 +98,47 @@ public class HomeActivity extends AppCompatActivity {
             new View.OnClickListener() {
               @Override
               public void onClick(View v) {
-                Intent intentSignUp = new Intent(HomeActivity.this, Categories.class);
-                startActivity(intentSignUp);
+                Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+                startActivity(categoryPage);
               }
             });
 
-  }
+    navigationView = (NavigationView) findViewById(R.id.navigation_view);
 
+    navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+      @Override
+      public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+          case R.id.menu_home:
+            Intent home = new Intent(HomeActivity.this, HomeActivity.class);
+            startActivity(home);
+            return true;
+          case R.id.menu_search:
+            Intent search = new Intent(HomeActivity.this, SearchBook.class);
+            startActivity(search);
+            return true;
+          case R.id.menu_sell:
+            Intent sell = new Intent(HomeActivity.this, SellBook.class);
+            startActivity(sell);
+            return true;
+          case R.id.menu_wishlist:
+            Intent wishlist = new Intent(HomeActivity.this, Wishlist.class);
+            startActivity(wishlist);
+            return true;
+          case R.id.menu_listings:
+            Intent listings = new Intent(HomeActivity.this, Listings.class);
+            startActivity(listings);
+            return true;
+          case R.id.menu_logout:
+            Intent logout = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(logout);
+            return true;
+        }
+        return true;
+      }
+    });
+
+  }
 
 
   public class HamburgerDrawable extends DrawerArrowDrawable {

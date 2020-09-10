@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SellBook"></activity>
+        <activity android:name=".EditBook"></activity>
+        <activity android:name=".Listings" />
+        <activity android:name=".SearchBook" />
+        <activity android:name=".SellBook" />
         <activity android:name=".Wishlist" />
         <activity android:name=".Categories" />
         <activity android:name=".Book" />
