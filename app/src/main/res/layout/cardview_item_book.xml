@@ -1,61 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    android:layout_width="150dp"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/tools"
-    android:layout_marginBottom="20dp"
-    android:layout_marginLeft="10dp"
-    android:background="@drawable/rounded_scroll"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <androidx.cardview.widget.CardView
-    android:layout_width="100dp"
+    android:layout_width="150dp"
+    android:id="@+id/card_view_select"
     android:layout_height="wrap_content"
-    xmlns:cardview="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="15dp"
-    android:layout_marginRight="7dp"
-    android:layout_marginBottom="15dp"
-    android:layout_marginLeft="25dp"
-    cardview:cardElevation="0dp">
+    android:layout_marginLeft="10dp"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/rounded_scroll">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <androidx.cardview.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="15dp"
+        cardview:cardElevation="0dp">
 
-        <ImageView
-            android:id="@+id/book_img_id"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:scaleType="centerCrop"
-            android:background="#716F6F"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/book_title_id"
-            android:textColor="#000"
-            android:textSize="13sp"
-            android:gravity="center"
-            android:paddingTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#BACAD6"
-            android:text="Book Title"/>
+            <ImageView
+                android:id="@+id/book_img_id"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:background="#716F6F"
+                android:scaleType="centerCrop" />
 
-        <TextView
-            android:id="@+id/book_Price_id"
-            android:textColor="#000"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#BACAD6"
-            android:text="Price"
-            android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/book_title_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BACAD6"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="Book Title"
+                android:textColor="#000"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/book_Price_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BACAD6"
+                android:gravity="center"
+                android:text="Price"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
 
-    </LinearLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

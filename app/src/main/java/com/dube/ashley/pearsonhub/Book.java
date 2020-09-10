@@ -58,7 +58,7 @@ public class Book extends AppCompatActivity {
             }
         });
 
-        mdrawer = (DrawerLayout) findViewById(R.id.id_drawer_layout);
+        mdrawer = (DrawerLayout) findViewById(R.id.book_drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
 
         mdrawer.addDrawerListener(mToggle);
@@ -106,6 +106,13 @@ public class Book extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     public class HamburgerDrawable extends DrawerArrowDrawable {
 
         public HamburgerDrawable(Context context) {

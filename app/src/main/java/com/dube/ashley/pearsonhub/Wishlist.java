@@ -61,7 +61,7 @@ public class Wishlist extends AppCompatActivity {
             }
         });
 
-        mdrawer = (DrawerLayout) findViewById(R.id.id_drawer_layout);
+        mdrawer = (DrawerLayout) findViewById(R.id.wishlist_drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
 
         mdrawer.addDrawerListener(mToggle);
@@ -124,5 +124,13 @@ public class Wishlist extends AppCompatActivity {
             setBarThickness(16.0f);
             setGapSize(20.0f);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

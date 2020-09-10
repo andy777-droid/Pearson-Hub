@@ -26,9 +26,8 @@ public class SellBook extends AppCompatActivity
 {
     private DrawerLayout mdrawer;
     private ActionBarDrawerToggle mToggle;
-    FirebaseAuth mFirebaseAuth;
+    private FirebaseAuth mFirebaseAuth;
     private NavigationView navigationView;
-
     private DatabaseReference databaseReference;
     private FirebaseUser user;
 
@@ -37,7 +36,6 @@ public class SellBook extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell_book);
-
 
         mFirebaseAuth=FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -49,9 +47,9 @@ public class SellBook extends AppCompatActivity
             {
                 User curUsers =snapshot.getValue(User.class);
                 assert curUsers != null;
-                NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+                navigationView = findViewById(R.id.navigation_view);
                 View header = navigationView.getHeaderView(0);
-                TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
+                TextView tv = header.findViewById(R.id.id_nav_header);
                 tv.setText( curUsers.getFirstname()+" "+curUsers.getLastname());
             }
 
@@ -62,7 +60,7 @@ public class SellBook extends AppCompatActivity
             }
         });
 
-        mdrawer = (DrawerLayout) findViewById(R.id.id_drawer_layout);
+        mdrawer = findViewById(R.id.sell_drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
 
         mdrawer.addDrawerListener(mToggle);
@@ -72,9 +70,9 @@ public class SellBook extends AppCompatActivity
         setTitle("");
         getSupportActionBar().setElevation(0);
 
-        mToggle.setDrawerArrowDrawable(new HamburgerDrawable(this));
+        mToggle.setDrawerArrowDrawable(new SellBook.HamburgerDrawable(this));
 
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView = findViewById(R.id.navigation_view);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -108,7 +106,16 @@ public class SellBook extends AppCompatActivity
                 return true;
             }
         });
+
     }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public class HamburgerDrawable extends DrawerArrowDrawable {
 
@@ -126,6 +133,7 @@ public class SellBook extends AppCompatActivity
             setGapSize(20.0f);
         }
     }
+
 
 
 

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
+import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
@@ -35,7 +37,7 @@ public class Categories extends AppCompatActivity
     private DrawerLayout mdrawer;
     private ActionBarDrawerToggle mToggle;
     private NavigationView navigationView;
-    private Button btn1;
+    private LinearLayout click1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,7 +47,7 @@ public class Categories extends AppCompatActivity
         RecyclerView v = (RecyclerView) findViewById(R.id.recyclerview_id);
         v.setNestedScrollingEnabled(false);
 
-        mdrawer = (DrawerLayout) findViewById(R.id.id_drawer_layout);
+        mdrawer = (DrawerLayout) findViewById(R.id.category_drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
 
         mdrawer.addDrawerListener(mToggle);
@@ -124,7 +126,7 @@ public class Categories extends AppCompatActivity
             }
         });
 
-        mdrawer = (DrawerLayout) findViewById(R.id.id_drawer_layout);
+        mdrawer = (DrawerLayout) findViewById(R.id.category_drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
 
         mdrawer.addDrawerListener(mToggle);
@@ -171,16 +173,17 @@ public class Categories extends AppCompatActivity
             }
         });
 
-        btn1 = (Button) findViewById(R.id.button1);
-        btn1.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent info = new Intent(Categories.this, Book.class);
-                        startActivity(info);
-                    }
-                });
+//        click1 = (LinearLayout) findViewById(R.id.card_view_select);
+//        click1.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent info = new Intent(Categories.this, Book.class);
+//                        startActivity(info);
+//                    }
+//                });
     }
+
 
     public class HamburgerDrawable extends DrawerArrowDrawable {
 

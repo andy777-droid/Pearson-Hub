@@ -200,6 +200,5 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/navigation_header"
         app:menu="@menu/drawer_menu"
-        app:theme="@style/NavigationViewStyle"/>
-
+        app:theme="@style/NavigationViewStyle" />
 </androidx.drawerlayout.widget.DrawerLayout>

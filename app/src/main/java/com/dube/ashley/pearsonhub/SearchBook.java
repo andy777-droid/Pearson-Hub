@@ -36,6 +36,7 @@ public class SearchBook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_book);
+
         mFirebaseAuth=FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
@@ -59,7 +60,7 @@ public class SearchBook extends AppCompatActivity {
             }
         });
 
-        mdrawer = (DrawerLayout) findViewById(R.id.id_drawer_layout);
+        mdrawer = (DrawerLayout) findViewById(R.id.search_drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
 
         mdrawer.addDrawerListener(mToggle);
@@ -122,5 +123,13 @@ public class SearchBook extends AppCompatActivity {
             setBarThickness(16.0f);
             setGapSize(20.0f);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -29,9 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity {
-  Button signOutBTN;
   FirebaseAuth mFirebaseAuth;
-  private FirebaseAuth.AuthStateListener mAuthStateListener;
   private ViewPager viewPager;
   private SliderAdapter sliderAdapter;
   private NavigationView navigationView;
@@ -39,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
   private TextView[] mdots;
   private DrawerLayout mdrawer;
   private ActionBarDrawerToggle mToggle;
-  private Button btn1, btn2;
+  private Button btn1;
   private DatabaseReference databaseReference;
   private FirebaseUser user;
   String name;
@@ -73,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
       }
     });
 
-    mdrawer = (DrawerLayout) findViewById(R.id.id_drawer_layout);
+    mdrawer = (DrawerLayout) findViewById(R.id.home_drawer_layout);
     mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
 
     mdrawer.addDrawerListener(mToggle);
@@ -103,7 +101,7 @@ public class HomeActivity extends AppCompatActivity {
               }
             });
 
-    navigationView = (NavigationView) findViewById(R.id.navigation_view);
+    navigationView = findViewById(R.id.navigation_view);
 
     navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
       @Override
