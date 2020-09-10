@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,6 +34,8 @@ public class Categories extends AppCompatActivity
     List<CategoryHandler> catBooks;
     private DrawerLayout mdrawer;
     private ActionBarDrawerToggle mToggle;
+    private NavigationView navigationView;
+    private Button btn1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -98,25 +101,104 @@ public class Categories extends AppCompatActivity
         });
 
 
-    }
-    public class HamburgerDrawable extends DrawerArrowDrawable
-    {
+        mFirebaseAuth=FirebaseAuth.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+        databaseReference.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                User curUsers =snapshot.getValue(User.class);
+                assert curUsers != null;
+                NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+                View header = navigationView.getHeaderView(0);
+                TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
+                tv.setText( curUsers.getFirstname()+" "+curUsers.getLastname());
+            }
 
-        public HamburgerDrawable(Context context){
+            @Override
+            public void onCancelled(@NonNull DatabaseError error)
+            {
+                Toast.makeText(Categories.this,error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+
+        mdrawer = (DrawerLayout) findViewById(R.id.id_drawer_layout);
+        mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
+
+        mdrawer.addDrawerListener(mToggle);
+        mToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("");
+        getSupportActionBar().setElevation(0);
+
+        mToggle.setDrawerArrowDrawable(new HamburgerDrawable(this));
+
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.menu_home:
+                        Intent home = new Intent(Categories.this, HomeActivity.class);
+                        startActivity(home);
+                        return true;
+                    case R.id.menu_search:
+                        Intent search = new Intent(Categories.this, SearchBook.class);
+                        startActivity(search);
+                        return true;
+                    case R.id.menu_sell:
+                        Intent sell = new Intent(Categories.this, SellBook.class);
+                        startActivity(sell);
+                        return true;
+                    case R.id.menu_wishlist:
+                        Intent wishlist = new Intent(Categories.this, Wishlist.class);
+                        startActivity(wishlist);
+                        return true;
+                    case R.id.menu_listings:
+                        Intent listings = new Intent(Categories.this, Listings.class);
+                        startActivity(listings);
+                        return true;
+                    case R.id.menu_logout:
+                        Intent logout = new Intent(Categories.this, LoginActivity.class);
+                        startActivity(logout);
+                        return true;
+                }
+                return true;
+            }
+        });
+
+        btn1 = (Button) findViewById(R.id.button1);
+        btn1.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent info = new Intent(Categories.this, Book.class);
+                        startActivity(info);
+                    }
+                });
+    }
+
+    public class HamburgerDrawable extends DrawerArrowDrawable {
+
+        public HamburgerDrawable(Context context) {
             super(context);
             setColor(context.getResources().getColor(R.color.colorPrimary));
         }
 
         @Override
-        public void draw(Canvas canvas){
+        public void draw(Canvas canvas) {
             super.draw(canvas);
 
             setBarLength(100.0f);
             setBarThickness(16.0f);
             setGapSize(20.0f);
-
         }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
