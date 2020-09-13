@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
   private TextView[] mdots;
   private DrawerLayout mdrawer;
   private ActionBarDrawerToggle mToggle;
-  private Button btn1;
+  private Button btn1,btn2;
   private DatabaseReference databaseReference;
   private FirebaseUser user;
   String name;
@@ -101,6 +101,17 @@ public class HomeActivity extends AppCompatActivity {
               public void onClick(View v) {
                 Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
                 startActivity(categoryPage);
+              }
+            });
+
+    btn2 = (Button) findViewById(R.id.button2);
+
+    btn2.setOnClickListener(
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                Intent bookPage = new Intent(HomeActivity.this, Book.class);
+                startActivity(bookPage);
               }
             });
 

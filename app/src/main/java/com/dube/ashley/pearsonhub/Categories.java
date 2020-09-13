@@ -44,8 +44,6 @@ public class Categories extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
-        RecyclerView v = (RecyclerView) findViewById(R.id.recyclerview_id);
-        v.setNestedScrollingEnabled(false);
 
         mdrawer = (DrawerLayout) findViewById(R.id.category_drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
@@ -59,20 +57,21 @@ public class Categories extends AppCompatActivity
 
         catBooks=new ArrayList<>();
 
-        catBooks.add(new CategoryHandler("Accounting",750,"Bcom","My Description",R.drawable.accounting));
-        catBooks.add(new CategoryHandler("Arts and Culture",550,"BA","My Description",R.drawable.arts));
-        catBooks.add(new CategoryHandler("English",650,"BA","My Description",R.drawable.english));
-        catBooks.add(new CategoryHandler("Mathematics",450,"BSc","My Description",R.drawable.maths));
-        catBooks.add(new CategoryHandler("Science",350,"BSc","My Description",R.drawable.science));
-        catBooks.add(new CategoryHandler("Business Management",480,"Bcom","My Description",R.drawable.business));
-        catBooks.add(new CategoryHandler("Arts and Culture",550,"BA","My Description",R.drawable.arts));
-        catBooks.add(new CategoryHandler("English",650,"BA","My Description",R.drawable.english));
-        catBooks.add(new CategoryHandler("Mathematics",450,"BSc","My Description",R.drawable.maths));
-        catBooks.add(new CategoryHandler("Science",350,"BSc","My Description",R.drawable.science));
-        catBooks.add(new CategoryHandler("Business Management",480,"Bcom","My Description",R.drawable.business));
+        catBooks.add(new CategoryHandler("Accounting",750,"Bcom","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.accounting));
+        catBooks.add(new CategoryHandler("Arts and Culture",550,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.arts));
+        catBooks.add(new CategoryHandler("English",650,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.english));
+        catBooks.add(new CategoryHandler("Mathematics",450,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.maths));
+        catBooks.add(new CategoryHandler("Science",350,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.science));
+        catBooks.add(new CategoryHandler("Business Management",480,"Bcom","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.business));
+        catBooks.add(new CategoryHandler("Arts and Culture",550,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.arts));
+        catBooks.add(new CategoryHandler("English",650,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.english));
+        catBooks.add(new CategoryHandler("Mathematics",450,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.maths));
+        catBooks.add(new CategoryHandler("Science",350,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.science));
+        catBooks.add(new CategoryHandler("Business Management",480,"Bcom","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.business));
 
 
         RecyclerView rv=(RecyclerView) findViewById(R.id.recyclerview_id);
+        rv.setNestedScrollingEnabled(false);
         RecyclerViewAdapter rva=new RecyclerViewAdapter(this,catBooks);
         rv.setLayoutManager(new GridLayoutManager(this,2));
         rv.setAdapter(rva);
@@ -102,29 +101,6 @@ public class Categories extends AppCompatActivity
             }
         });
 
-
-        mFirebaseAuth=FirebaseAuth.getInstance();
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
-        databaseReference.addValueEventListener(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot)
-            {
-                User curUsers =snapshot.getValue(User.class);
-                assert curUsers != null;
-                NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-                View header = navigationView.getHeaderView(0);
-                TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
-                tv.setText( curUsers.getFirstname()+" "+curUsers.getLastname());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error)
-            {
-                Toast.makeText(Categories.this,error.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
 
         mdrawer = (DrawerLayout) findViewById(R.id.category_drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);

@@ -7,6 +7,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -24,8 +27,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchBook extends AppCompatActivity {
     FirebaseAuth mFirebaseAuth;
+    List<CategoryHandler> catBooks;
     private NavigationView navigationView;
     private DrawerLayout mdrawer;
     private ActionBarDrawerToggle mToggle;
@@ -36,6 +43,29 @@ public class SearchBook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_book);
+        RecyclerView rv = (RecyclerView) findViewById(R.id.recyclerviewSearch_id);
+        rv.setNestedScrollingEnabled(false);
+
+
+        catBooks=new ArrayList<>();
+
+        catBooks.add(new CategoryHandler("Accounting",750,"Bcom","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.accounting));
+        catBooks.add(new CategoryHandler("Arts and Culture",550,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.arts));
+        catBooks.add(new CategoryHandler("English",650,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.english));
+        catBooks.add(new CategoryHandler("Mathematics",450,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.maths));
+        catBooks.add(new CategoryHandler("Science",350,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.science));
+        catBooks.add(new CategoryHandler("Business Management",480,"Bcom","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.business));
+        catBooks.add(new CategoryHandler("Arts and Culture",550,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.arts));
+        catBooks.add(new CategoryHandler("English",650,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.english));
+        catBooks.add(new CategoryHandler("Mathematics",450,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.maths));
+        catBooks.add(new CategoryHandler("Science",350,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.science));
+        catBooks.add(new CategoryHandler("Business Management",480,"Bcom","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.business));
+
+
+
+        RecyclerViewAdapter rva=new RecyclerViewAdapter(this,catBooks);
+        rv.setLayoutManager(new GridLayoutManager(this,2));
+        rv.setAdapter(rva);
 
         mFirebaseAuth=FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();

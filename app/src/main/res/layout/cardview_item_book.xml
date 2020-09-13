@@ -2,6 +2,8 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/tools"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     android:layout_width="150dp"
     android:id="@+id/card_view_select"
     android:layout_height="wrap_content"
@@ -9,7 +11,11 @@
     android:layout_marginBottom="20dp"
     android:background="@drawable/rounded_scroll">
 
-    <androidx.cardview.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView
+        xmlns:cardview="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cardViewBook_id"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"

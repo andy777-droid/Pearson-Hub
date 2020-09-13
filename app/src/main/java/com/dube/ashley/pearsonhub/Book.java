@@ -1,5 +1,7 @@
 package com.dube.ashley.pearsonhub;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
@@ -22,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
 public class Book extends AppCompatActivity {
 
     FirebaseAuth mFirebaseAuth;
@@ -30,11 +34,45 @@ public class Book extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
     private DatabaseReference databaseReference;
     private FirebaseUser user;
+    private TextView tvTitle,tvPrice,tvSellerNumber,tvAuthor,tvCondition,tvISBN,tvSellerName;
+    private ImageView img;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
+
+        tvTitle=(TextView) findViewById(R.id.textView);
+        tvPrice=(TextView) findViewById(R.id.textView2);
+        tvSellerNumber=(TextView) findViewById(R.id.textView12);
+        tvSellerName=(TextView) findViewById(R.id.textView11);
+        tvAuthor=(TextView) findViewById(R.id.textView9);
+        tvCondition=(TextView) findViewById(R.id.textView10);
+        tvISBN=(TextView) findViewById(R.id.textView8);
+        img=(ImageView) findViewById(R.id.imageView4);
+
+        Intent intent=getIntent();
+
+        int image=intent.getExtras().getInt("Thumbnail");
+        String title =intent.getExtras().getString("Title");
+        String price=intent.getExtras().getString("Price");
+        String sellerNumber=intent.getExtras().getString("SellerNumber");
+        String sellerName=intent.getExtras().getString("SellerName");
+        String author=intent.getExtras().getString("Author");
+        int condition=intent.getExtras().getInt("Condition");
+        String isbn=intent.getExtras().getString("ISBN");
+
+        tvTitle.setText(title);
+        tvPrice.setText("R "+price);
+        tvSellerNumber.setText(sellerNumber);
+        tvAuthor.setText(author);
+        tvCondition.setText(String.valueOf(condition));
+        tvISBN.setText(isbn);
+        tvSellerName.setText(sellerName);
+        img.setImageResource(image);
+
+
         mFirebaseAuth=FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
@@ -89,8 +127,8 @@ public class Book extends AppCompatActivity {
                         startActivity(sell);
                         return true;
                     case R.id.menu_wishlist:
-                        Intent wishlist = new Intent(Book.this, Wishlist.class);
-                        startActivity(wishlist);
+                        Intent Book = new Intent(Book.this, Book.class);
+                        startActivity(Book);
                         return true;
                     case R.id.menu_listings:
                         Intent listings = new Intent(Book.this, Listings.class);
@@ -106,13 +144,6 @@ public class Book extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (mToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
     public class HamburgerDrawable extends DrawerArrowDrawable {
 
         public HamburgerDrawable(Context context) {
@@ -128,5 +159,13 @@ public class Book extends AppCompatActivity {
             setBarThickness(16.0f);
             setGapSize(20.0f);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
