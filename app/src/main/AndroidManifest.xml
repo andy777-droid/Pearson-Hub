@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditBook"></activity>
+        <activity android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".EditBook" />
         <activity android:name=".Listings" />
         <activity android:name=".SearchBook" />
         <activity android:name=".SellBook" />
@@ -24,7 +27,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".HomeActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

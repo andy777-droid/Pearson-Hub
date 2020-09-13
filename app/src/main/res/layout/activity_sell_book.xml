@@ -9,7 +9,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#FFFFFF">
 
 
@@ -157,7 +157,7 @@
                             android:id="@+id/chooseImage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="30px"
+                            android:layout_marginBottom="15dp"
                             android:background="@drawable/rounded_button"
                             android:drawableRight="@drawable/image"
                             android:paddingRight="20dp"
@@ -177,7 +177,7 @@
                             android:id="@+id/listSale"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="30px"
+                            android:layout_marginBottom="15dp"
                             android:background="@drawable/rounded_button"
                             android:drawableRight="@drawable/list_white"
                             android:paddingRight="20dp"

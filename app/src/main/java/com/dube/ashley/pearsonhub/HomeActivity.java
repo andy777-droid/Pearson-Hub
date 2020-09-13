@@ -104,17 +104,6 @@ public class HomeActivity extends AppCompatActivity {
               }
             });
 
-    btn2 = (Button) findViewById(R.id.button2);
-
-    btn2.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                Intent bookPage = new Intent(HomeActivity.this, Book.class);
-                startActivity(bookPage);
-              }
-            });
-
     navigationView = findViewById(R.id.navigation_view);
 
     navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

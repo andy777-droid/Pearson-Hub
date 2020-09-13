@@ -133,10 +133,11 @@
                 android:id="@+id/signUpBTN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_button"
+                android:text="register"
                 android:textColor="#FFFFFF"
                 android:textSize="18dp"
-                android:text="register"
                 tools:ignore="HardcoreText" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
