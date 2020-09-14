@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:id="@+id/sell_drawer_layout">
+    android:id="@+id/edit_drawer_layout">
 
     <ScrollView
         android:layout_width="match_parent"
