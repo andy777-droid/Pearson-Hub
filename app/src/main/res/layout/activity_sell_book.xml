@@ -154,7 +154,7 @@
                         android:padding="20px">
 
                         <Button
-                            android:id="@+id/chooseImage"
+                            android:id="@+id/saveBook"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="30px"
