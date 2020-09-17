@@ -160,7 +160,7 @@
         </RelativeLayout>
 
     </ScrollView>
-
+    
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
