@@ -46,8 +46,8 @@ public class HomeActivity extends AppCompatActivity {
 
   //These are the categories of the books
   String graphicsCategory="Books/GraphicsDesign";
-  String artsCategory="Books/GraphicsDesign";
-  String lawsCategory="Books/GraphicsDesign";
+  String artsCategory="Books/Arts";
+  String lawsCategory="Books/Law";
   String compSciCategory="Books/ComputerScience";
   String tourismCategory="Books/Tourism";
   String psychoCategory="Books/Psychology";
