@@ -12,13 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,6 +33,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +45,12 @@ public class Categories extends AppCompatActivity
     private ActionBarDrawerToggle mToggle;
     private NavigationView navigationView;
     private LinearLayout click1;
+    //View Image from Database
+    FirebaseRecyclerOptions<CategoryHandler> options;
+    FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder> adapter;
+    DatabaseReference databaseReference,databaseReference2;
+    RecyclerView rv;
+    int myPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,34 +67,19 @@ public class Categories extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("");
         getSupportActionBar().setElevation(0);
-
-        catBooks=new ArrayList<>();
-
-        catBooks.add(new CategoryHandler("Accounting",750,"Bcom","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.accounting));
-        catBooks.add(new CategoryHandler("Arts and Culture",550,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.arts));
-        catBooks.add(new CategoryHandler("English",650,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.english));
-        catBooks.add(new CategoryHandler("Mathematics",450,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.maths));
-        catBooks.add(new CategoryHandler("Science",350,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.science));
-        catBooks.add(new CategoryHandler("Business Management",480,"Bcom","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.business));
-        catBooks.add(new CategoryHandler("Arts and Culture",550,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.arts));
-        catBooks.add(new CategoryHandler("English",650,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.english));
-        catBooks.add(new CategoryHandler("Mathematics",450,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.maths));
-        catBooks.add(new CategoryHandler("Science",350,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.science));
-        catBooks.add(new CategoryHandler("Business Management",480,"Bcom","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.business));
-
-
-        RecyclerView rv=(RecyclerView) findViewById(R.id.recyclerview_id);
+        //Request Books
+        databaseReference=FirebaseDatabase.getInstance().getReference().child("Books");
+        rv=(RecyclerView) findViewById(R.id.recyclerview_id);
+        loadData(this);
         rv.setNestedScrollingEnabled(false);
-        RecyclerViewAdapter rva=new RecyclerViewAdapter(this,catBooks);
         rv.setLayoutManager(new GridLayoutManager(this,2));
-        rv.setAdapter(rva);
 
         mToggle.setDrawerArrowDrawable(new Categories.HamburgerDrawable(this));
 
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
-        databaseReference.addValueEventListener(new ValueEventListener()
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+        databaseReference2.addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
@@ -149,15 +147,61 @@ public class Categories extends AppCompatActivity
             }
         });
 
-//        click1 = (LinearLayout) findViewById(R.id.card_view_select);
-//        click1.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent info = new Intent(Categories.this, Book.class);
-//                        startActivity(info);
-//                    }
-//                });
+    }
+
+
+    private void loadData(Context mContext)
+    {
+        final Context myContext;
+        myContext = mContext;
+        catBooks=new ArrayList<>();
+        options= new FirebaseRecyclerOptions.Builder<CategoryHandler>().setQuery(databaseReference,CategoryHandler.class).build();
+        adapter=new FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder>(options) {
+
+            @NonNull
+            @Override
+            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+            {
+                View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_item_book,parent,false);
+                return new MyViewHolder(view);
+            }
+            @Override
+            protected void onBindViewHolder(@NonNull MyViewHolder holder, final int position, @NonNull CategoryHandler model)
+            {
+                holder.title.setText(model.getTitle());
+                holder.price.setText("R "+model.getPrice());
+                Picasso.Builder builder = new Picasso.Builder(myContext);
+                builder.listener(new Picasso.Listener()
+                {
+                    @Override
+                    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
+                    {
+                        exception.printStackTrace();
+                    }
+                });
+                builder.build().load(model.getThumbnail()).into(holder.thumbnail);
+                catBooks.add(new CategoryHandler(model.getTitle(),model.getPrice(),model.getCategory(),model.getAuthor(),model.getCondition(),model.getISBN(),model.getSellerNumber(),model.getSellerName(),model.getThumbnail()));
+                //click listener
+                holder.cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Intent intent=new Intent(myContext,Book.class);
+                        intent.putExtra("Thumbnail",catBooks.get(position).getThumbnail());
+                        intent.putExtra("Title",catBooks.get(position).getTitle());
+                        intent.putExtra("Price",catBooks.get(position).getPrice());
+                        intent.putExtra("SellerNumber",catBooks.get(position).getSellerNumber());
+                        intent.putExtra("SellerName",catBooks.get(position).getSellerName());
+                        intent.putExtra("Author",catBooks.get(position).getAuthor());
+                        intent.putExtra("Condition",catBooks.get(position).getCondition());
+                        intent.putExtra("ISBN",catBooks.get(position).getISBN());
+                        myContext.startActivity(intent);
+                    }
+                });
+            }
+        };
+        adapter.startListening();
+        rv.setAdapter(adapter);
     }
 
 

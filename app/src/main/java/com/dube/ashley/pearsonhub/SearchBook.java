@@ -45,27 +45,7 @@ public class SearchBook extends AppCompatActivity {
         setContentView(R.layout.activity_search_book);
         RecyclerView rv = (RecyclerView) findViewById(R.id.recyclerviewSearch_id);
         rv.setNestedScrollingEnabled(false);
-
-
         catBooks=new ArrayList<>();
-
-        catBooks.add(new CategoryHandler("Accounting",750,"Bcom","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.accounting));
-        catBooks.add(new CategoryHandler("Arts and Culture",550,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.arts));
-        catBooks.add(new CategoryHandler("English",650,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.english));
-        catBooks.add(new CategoryHandler("Mathematics",450,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.maths));
-        catBooks.add(new CategoryHandler("Science",350,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.science));
-        catBooks.add(new CategoryHandler("Business Management",480,"Bcom","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.business));
-        catBooks.add(new CategoryHandler("Arts and Culture",550,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.arts));
-        catBooks.add(new CategoryHandler("English",650,"BA","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.english));
-        catBooks.add(new CategoryHandler("Mathematics",450,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.maths));
-        catBooks.add(new CategoryHandler("Science",350,"BSc","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.science));
-        catBooks.add(new CategoryHandler("Business Management",480,"Bcom","AshDee",7,"844713587412","0838642247","Ashley",R.drawable.business));
-
-
-
-        RecyclerViewAdapter rva=new RecyclerViewAdapter(this,catBooks);
-        rv.setLayoutManager(new GridLayoutManager(this,2));
-        rv.setAdapter(rva);
 
         mFirebaseAuth=FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();

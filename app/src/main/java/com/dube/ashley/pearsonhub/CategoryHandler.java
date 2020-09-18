@@ -3,14 +3,14 @@ package com.dube.ashley.pearsonhub;
 public class CategoryHandler
 {
     private String title;
-    private float price;
+    private String price;
     private String category;
     private String sellerNumber;
     private String sellerName;
     private String author;
-    private int condition;
+    private String condition;
     private String ISBN;
-    private int thumbnail;
+    private String thumbnail;
 
 
     public CategoryHandler()
@@ -18,7 +18,7 @@ public class CategoryHandler
 
     }
 
-    public CategoryHandler (String title,float price, String category, String author, int condition, String ISBN, String sellerNumber,String sellerName, int thumbnail)
+    public CategoryHandler (String title,String price, String category, String author, String condition, String ISBN, String sellerNumber,String sellerName, String thumbnail)
     {
         this.title = title;
         this.category = category;
@@ -63,20 +63,21 @@ public class CategoryHandler
         this.sellerName = sellerName;
     }
 
-    public int getThumbnail() {
+    public String getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(int thumbnail) {
+    public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
 
     public String getPrice() {
-        String bookPrice=String.valueOf(price);
-        return bookPrice;
+       // String bookPrice=String.valueOf(price);
+        //return bookPrice;
+        return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -88,11 +89,11 @@ public class CategoryHandler
         this.author = author;
     }
 
-    public int getCondition() {
+    public String getCondition() {
         return condition;
     }
 
-    public void setCondition(int condition) {
+    public void setCondition(String condition) {
         this.condition = condition;
     }
 

@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 
 public class Book extends AppCompatActivity {
@@ -54,13 +56,13 @@ public class Book extends AppCompatActivity {
 
         Intent intent=getIntent();
 
-        int image=intent.getExtras().getInt("Thumbnail");
+        String image=intent.getExtras().getString("Thumbnail");
         String title =intent.getExtras().getString("Title");
         String price=intent.getExtras().getString("Price");
         String sellerNumber=intent.getExtras().getString("SellerNumber");
         String sellerName=intent.getExtras().getString("SellerName");
         String author=intent.getExtras().getString("Author");
-        int condition=intent.getExtras().getInt("Condition");
+        String condition=intent.getExtras().getString("Condition");
         String isbn=intent.getExtras().getString("ISBN");
 
         tvTitle.setText(title);
@@ -70,7 +72,17 @@ public class Book extends AppCompatActivity {
         tvCondition.setText(String.valueOf(condition));
         tvISBN.setText(isbn);
         tvSellerName.setText(sellerName);
-        img.setImageResource(image);
+        Picasso.Builder builder = new Picasso.Builder(this);
+        builder.listener(new Picasso.Listener()
+        {
+            @Override
+            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
+            {
+                exception.printStackTrace();
+            }
+        });
+        builder.build().load(image).into(img);
+        //img.setImageResource(image);
 
 
         mFirebaseAuth=FirebaseAuth.getInstance();
