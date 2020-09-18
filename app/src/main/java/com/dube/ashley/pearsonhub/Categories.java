@@ -51,12 +51,19 @@ public class Categories extends AppCompatActivity
     DatabaseReference databaseReference,databaseReference2;
     RecyclerView rv;
     int myPosition;
+    TextView catName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
+        Intent intent=getIntent();
+
+        String branch=intent.getExtras().getString("branch");
+        String categoryName=intent.getExtras().getString("categoryName");
+        catName=(TextView) findViewById(R.id.categoryName);
+        catName.setText(categoryName);
 
         mdrawer = (DrawerLayout) findViewById(R.id.category_drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
@@ -68,7 +75,7 @@ public class Categories extends AppCompatActivity
         setTitle("");
         getSupportActionBar().setElevation(0);
         //Request Books
-        databaseReference=FirebaseDatabase.getInstance().getReference().child("Books");
+        databaseReference=FirebaseDatabase.getInstance().getReference().child(branch);
         rv=(RecyclerView) findViewById(R.id.recyclerview_id);
         loadData(this);
         rv.setNestedScrollingEnabled(false);

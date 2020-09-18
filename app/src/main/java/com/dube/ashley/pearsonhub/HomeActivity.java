@@ -39,10 +39,18 @@ public class HomeActivity extends AppCompatActivity {
   private TextView[] mdots;
   private DrawerLayout mdrawer;
   private ActionBarDrawerToggle mToggle;
-  private Button btn1,btn2;
+  private Button graphicsDesignBTN,artsBTN,lawsBTN,compSciBTN,tourismBTN,psychologyBTN;
   private DatabaseReference databaseReference;
   private FirebaseUser user;
   String name;
+
+  //These are the categories of the books
+  String graphicsCategory="Books/GraphicsDesign";
+  String artsCategory="Books/GraphicsDesign";
+  String lawsCategory="Books/GraphicsDesign";
+  String compSciCategory="Books/ComputerScience";
+  String tourismCategory="Books/Tourism";
+  String psychoCategory="Books/Psychology";
 
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   @Override
@@ -93,16 +101,79 @@ public class HomeActivity extends AppCompatActivity {
 
     mToggle.setDrawerArrowDrawable(new HamburgerDrawable(this));
 
-    btn1 = (Button) findViewById(R.id.button1);
+    graphicsDesignBTN = (Button) findViewById(R.id.graphicsDesignBTN);
+    artsBTN = (Button) findViewById(R.id.artsBTN);
+    lawsBTN = (Button) findViewById(R.id.lawsBTN);
+    compSciBTN = (Button) findViewById(R.id.compSciBTN);
+    tourismBTN = (Button) findViewById(R.id.tourismBTN);
+    psychologyBTN = (Button) findViewById(R.id.psychologyBTN);
 
-    btn1.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
-                startActivity(categoryPage);
-              }
-            });
+
+    graphicsDesignBTN.setOnClickListener(
+    new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+        categoryPage.putExtra("branch",graphicsCategory);
+        categoryPage.putExtra("categoryName","Graphics Design");
+        startActivity(categoryPage);
+      }
+    });
+
+    artsBTN.setOnClickListener(
+    new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+        categoryPage.putExtra("branch",artsCategory);
+        categoryPage.putExtra("categoryName","Arts");
+        startActivity(categoryPage);
+      }
+    });
+
+    compSciBTN.setOnClickListener(
+    new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+        categoryPage.putExtra("branch",compSciCategory);
+        categoryPage.putExtra("categoryName","Computer Science");
+        startActivity(categoryPage);
+      }
+    });
+
+    lawsBTN.setOnClickListener(
+    new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+        categoryPage.putExtra("branch",lawsCategory);
+        categoryPage.putExtra("categoryName","Law");
+        startActivity(categoryPage);
+      }
+    });
+
+    tourismBTN.setOnClickListener(
+    new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+        categoryPage.putExtra("branch",tourismCategory);
+        categoryPage.putExtra("categoryName","Tourism");
+        startActivity(categoryPage);
+      }
+    });
+
+    psychologyBTN.setOnClickListener(
+    new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+        categoryPage.putExtra("branch",psychoCategory);
+        categoryPage.putExtra("categoryName","Psychology");
+        startActivity(categoryPage);
+      }
+    });
 
     navigationView = findViewById(R.id.navigation_view);
 
