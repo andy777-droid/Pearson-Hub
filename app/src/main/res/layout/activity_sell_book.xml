@@ -121,21 +121,7 @@
                         android:paddingLeft="15dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/sellerNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_marginBottom="20dp"
-                        android:autofillHints=""
-                        android:background="@drawable/rounded_edits"
-                        android:hint="Seller Number"
-                        android:inputType="phone"
-                        android:paddingLeft="15dp" />
-                </com.google.android.material.textfield.TextInputLayout>
 
                 <GridLayout
                     android:id="@+id/GridLayout1"

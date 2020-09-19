@@ -39,18 +39,34 @@ public class HomeActivity extends AppCompatActivity {
   private TextView[] mdots;
   private DrawerLayout mdrawer;
   private ActionBarDrawerToggle mToggle;
-  private Button graphicsDesignBTN,artsBTN,lawsBTN,compSciBTN,tourismBTN,psychologyBTN;
+  private Button graphicsDesignBTN,
+      artsBTN,
+      lawsBTN,
+      compSciBTN,
+      tourismBTN,
+      psychologyBTN,
+      mathBTN,
+      biologyBTN,
+      physicsBTN,
+      chemistryBTN,
+      businessBTN,
+      englishBTN;
   private DatabaseReference databaseReference;
   private FirebaseUser user;
   String name;
 
-  //These are the categories of the books
-  String graphicsCategory="Books/GraphicsDesign";
-  String artsCategory="Books/Arts";
-  String lawsCategory="Books/Law";
-  String compSciCategory="Books/ComputerScience";
-  String tourismCategory="Books/Tourism";
-  String psychoCategory="Books/Psychology";
+  String graphicsCategory = "Books/GraphicsDesign";
+  String artsCategory = "Books/Arts";
+  String lawsCategory = "Books/Law";
+  String compSciCategory = "Books/ComputerScience";
+  String tourismCategory = "Books/Tourism";
+  String psychoCategory = "Books/Psychology";
+  String biologyCategory = "Books/Biology";
+  String englishCategory = "Books/English";
+  String mathsCategory = "Books/Mathematics";
+  String businessCategory = "Books/BusinessManagement";
+  String physicsCategory = "Books/PhysicalScience";
+  String chemistryCategory = "Books/Chemistry";
 
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   @Override
@@ -59,28 +75,26 @@ public class HomeActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
 
-    mFirebaseAuth=FirebaseAuth.getInstance();
+    mFirebaseAuth = FirebaseAuth.getInstance();
     user = FirebaseAuth.getInstance().getCurrentUser();
-    databaseReference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
-    databaseReference.addValueEventListener(new ValueEventListener()
-    {
-      @Override
-      public void onDataChange(@NonNull DataSnapshot snapshot)
-      {
-        User curUsers =snapshot.getValue(User.class);
-        assert curUsers != null;
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        View header = navigationView.getHeaderView(0);
-        TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
-        tv.setText( curUsers.getFirstname()+" "+curUsers.getLastname());
-      }
+    databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+    databaseReference.addValueEventListener(
+        new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot) {
+            User curUsers = snapshot.getValue(User.class);
+            assert curUsers != null;
+            NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+            View header = navigationView.getHeaderView(0);
+            TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
+            tv.setText(curUsers.getFirstname() + " " + curUsers.getLastname());
+          }
 
-      @Override
-      public void onCancelled(@NonNull DatabaseError error)
-      {
-        Toast.makeText(HomeActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
-      }
-    });
+          @Override
+          public void onCancelled(@NonNull DatabaseError error) {
+            Toast.makeText(HomeActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+          }
+        });
 
     mdrawer = (DrawerLayout) findViewById(R.id.home_drawer_layout);
     mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
@@ -108,110 +122,181 @@ public class HomeActivity extends AppCompatActivity {
     tourismBTN = (Button) findViewById(R.id.tourismBTN);
     psychologyBTN = (Button) findViewById(R.id.psychologyBTN);
 
+    mathBTN = (Button) findViewById(R.id.mathBTN);
+    chemistryBTN = (Button) findViewById(R.id.chemistryBTN);
+    biologyBTN = (Button) findViewById(R.id.biologyBTN);
+    physicsBTN = (Button) findViewById(R.id.physicsBTN);
+    businessBTN = (Button) findViewById(R.id.businessBTN);
+    englishBTN = (Button) findViewById(R.id.englishBTN);
+
+    englishBTN.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+            categoryPage.putExtra("branch", englishCategory);
+            categoryPage.putExtra("categoryName", "English");
+            startActivity(categoryPage);
+          }
+        });
+
+    businessBTN.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+            categoryPage.putExtra("branch", businessCategory);
+            categoryPage.putExtra("categoryName", "Business Management");
+            startActivity(categoryPage);
+          }
+        });
+
+    physicsBTN.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+            categoryPage.putExtra("branch", physicsCategory);
+            categoryPage.putExtra("categoryName", "Physical Science");
+            startActivity(categoryPage);
+          }
+        });
+
+    biologyBTN.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+            categoryPage.putExtra("branch", biologyCategory);
+            categoryPage.putExtra("categoryName", "Biology");
+            startActivity(categoryPage);
+          }
+        });
+
+    chemistryBTN.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+            categoryPage.putExtra("branch", chemistryCategory);
+            categoryPage.putExtra("categoryName", "Chemistry");
+            startActivity(categoryPage);
+          }
+        });
+
+    mathBTN.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+            categoryPage.putExtra("branch", mathsCategory);
+            categoryPage.putExtra("categoryName", "Mathematics");
+            startActivity(categoryPage);
+          }
+        });
 
     graphicsDesignBTN.setOnClickListener(
-    new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
-        categoryPage.putExtra("branch",graphicsCategory);
-        categoryPage.putExtra("categoryName","Graphics Design");
-        startActivity(categoryPage);
-      }
-    });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+            categoryPage.putExtra("branch", graphicsCategory);
+            categoryPage.putExtra("categoryName", "Graphics Design");
+            startActivity(categoryPage);
+          }
+        });
 
     artsBTN.setOnClickListener(
-    new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
-        categoryPage.putExtra("branch",artsCategory);
-        categoryPage.putExtra("categoryName","Arts");
-        startActivity(categoryPage);
-      }
-    });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+            categoryPage.putExtra("branch", artsCategory);
+            categoryPage.putExtra("categoryName", "Arts");
+            startActivity(categoryPage);
+          }
+        });
 
     compSciBTN.setOnClickListener(
-    new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
-        categoryPage.putExtra("branch",compSciCategory);
-        categoryPage.putExtra("categoryName","Computer Science");
-        startActivity(categoryPage);
-      }
-    });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+            categoryPage.putExtra("branch", compSciCategory);
+            categoryPage.putExtra("categoryName", "Computer Science");
+            startActivity(categoryPage);
+          }
+        });
 
     lawsBTN.setOnClickListener(
-    new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
-        categoryPage.putExtra("branch",lawsCategory);
-        categoryPage.putExtra("categoryName","Law");
-        startActivity(categoryPage);
-      }
-    });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+            categoryPage.putExtra("branch", lawsCategory);
+            categoryPage.putExtra("categoryName", "Law");
+            startActivity(categoryPage);
+          }
+        });
 
     tourismBTN.setOnClickListener(
-    new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
-        categoryPage.putExtra("branch",tourismCategory);
-        categoryPage.putExtra("categoryName","Tourism");
-        startActivity(categoryPage);
-      }
-    });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+            categoryPage.putExtra("branch", tourismCategory);
+            categoryPage.putExtra("categoryName", "Tourism");
+            startActivity(categoryPage);
+          }
+        });
 
     psychologyBTN.setOnClickListener(
-    new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
-        categoryPage.putExtra("branch",psychoCategory);
-        categoryPage.putExtra("categoryName","Psychology");
-        startActivity(categoryPage);
-      }
-    });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent categoryPage = new Intent(HomeActivity.this, Categories.class);
+            categoryPage.putExtra("branch", psychoCategory);
+            categoryPage.putExtra("categoryName", "Psychology");
+            startActivity(categoryPage);
+          }
+        });
 
     navigationView = findViewById(R.id.navigation_view);
 
-    navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-      @Override
-      public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-          case R.id.menu_home:
-            Intent home = new Intent(HomeActivity.this, HomeActivity.class);
-            startActivity(home);
+    navigationView.setNavigationItemSelectedListener(
+        new NavigationView.OnNavigationItemSelectedListener() {
+          @Override
+          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+              case R.id.menu_home:
+                Intent home = new Intent(HomeActivity.this, HomeActivity.class);
+                startActivity(home);
+                return true;
+              case R.id.menu_search:
+                Intent search = new Intent(HomeActivity.this, SearchBook.class);
+                startActivity(search);
+                return true;
+              case R.id.menu_sell:
+                Intent sell = new Intent(HomeActivity.this, SellBook.class);
+                startActivity(sell);
+                return true;
+              case R.id.menu_wishlist:
+                Intent wishlist = new Intent(HomeActivity.this, Wishlist.class);
+                startActivity(wishlist);
+                return true;
+              case R.id.menu_listings:
+                Intent listings = new Intent(HomeActivity.this, Listings.class);
+                startActivity(listings);
+                return true;
+              case R.id.menu_logout:
+                Intent logout = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(logout);
+                return true;
+            }
             return true;
-          case R.id.menu_search:
-            Intent search = new Intent(HomeActivity.this, SearchBook.class);
-            startActivity(search);
-            return true;
-          case R.id.menu_sell:
-            Intent sell = new Intent(HomeActivity.this, SellBook.class);
-            startActivity(sell);
-            return true;
-          case R.id.menu_wishlist:
-            Intent wishlist = new Intent(HomeActivity.this, Wishlist.class);
-            startActivity(wishlist);
-            return true;
-          case R.id.menu_listings:
-            Intent listings = new Intent(HomeActivity.this, Listings.class);
-            startActivity(listings);
-            return true;
-          case R.id.menu_logout:
-            Intent logout = new Intent(HomeActivity.this, LoginActivity.class);
-            startActivity(logout);
-            return true;
-        }
-        return true;
-      }
-    });
-
+          }
+        });
   }
-
 
   public class HamburgerDrawable extends DrawerArrowDrawable {
 
@@ -256,17 +341,17 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   ViewPager.OnPageChangeListener viewListener =
-          new ViewPager.OnPageChangeListener() {
+      new ViewPager.OnPageChangeListener() {
 
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
-            @Override
-            public void onPageSelected(int position) {
-              addDotsSlider(position);
-            }
+        @Override
+        public void onPageSelected(int position) {
+          addDotsSlider(position);
+        }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {}
-          };
+        @Override
+        public void onPageScrollStateChanged(int state) {}
+      };
 }

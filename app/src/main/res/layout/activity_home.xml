@@ -154,6 +154,114 @@
                         android:layout_marginBottom="30px"
                         android:textSize="20sp" />
                 </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_columnWeight="1"
+                    android:padding="20px">
+
+                    <Button
+                        android:id="@+id/mathBTN"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="@drawable/category_buttons"
+                        android:text="Mathematics"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginBottom="30px"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_columnWeight="1"
+                    android:padding="20px">
+
+                    <Button
+                        android:id="@+id/biologyBTN"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="@drawable/category_buttons"
+                        android:text="Biology"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginBottom="30px"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_columnWeight="1"
+                    android:padding="20px">
+
+                    <Button
+                        android:id="@+id/physicsBTN"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="@drawable/category_buttons"
+                        android:text="Physical Science"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginBottom="30px"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_columnWeight="1"
+                    android:padding="20px">
+
+                    <Button
+                        android:id="@+id/chemistryBTN"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="@drawable/category_buttons"
+                        android:text="Chemistry"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginBottom="30px"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_columnWeight="1"
+                    android:padding="20px">
+
+                    <Button
+                        android:id="@+id/businessBTN"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="@drawable/category_buttons"
+                        android:text="Business Management"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginBottom="30px"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_columnWeight="1"
+                    android:padding="20px">
+
+                    <Button
+                        android:id="@+id/englishBTN"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="@drawable/category_buttons"
+                        android:text="English"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginBottom="30px"
+                        android:textSize="20sp" />
+                </LinearLayout>
             </GridLayout>
 
 
