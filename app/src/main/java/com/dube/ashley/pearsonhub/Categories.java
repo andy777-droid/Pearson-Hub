@@ -32,6 +32,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -75,9 +76,8 @@ public class Categories extends AppCompatActivity
         setTitle("");
         getSupportActionBar().setElevation(0);
         //Request Books
-        databaseReference=FirebaseDatabase.getInstance().getReference().child(branch);
         rv=(RecyclerView) findViewById(R.id.recyclerview_id);
-        loadData(this);
+        loadData(this,branch);
         rv.setNestedScrollingEnabled(false);
         rv.setLayoutManager(new GridLayoutManager(this,2));
 
@@ -157,13 +157,16 @@ public class Categories extends AppCompatActivity
     }
 
 
-    private void loadData(Context mContext)
+    private void loadData(Context mContext, final String theCat)
     {
         final Context myContext;
         myContext = mContext;
         catBooks=new ArrayList<>();
-        options= new FirebaseRecyclerOptions.Builder<CategoryHandler>().setQuery(databaseReference,CategoryHandler.class).build();
-        adapter=new FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder>(options) {
+
+        options= new FirebaseRecyclerOptions.Builder<CategoryHandler>().setQuery(FirebaseDatabase.getInstance().getReference("Books").orderByChild("category").startAt(theCat).endAt(theCat),CategoryHandler.class).build();
+        // options= new FirebaseRecyclerOptions.Builder<CategoryHandler>().setQuery(databaseReference2,CategoryHandler.class).build();
+        adapter=new FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder>(options)
+        {
 
             @NonNull
             @Override
@@ -187,6 +190,7 @@ public class Categories extends AppCompatActivity
                     }
                 });
                 builder.build().load(model.getThumbnail()).into(holder.thumbnail);
+
                 catBooks.add(new CategoryHandler(model.getTitle(),model.getPrice(),model.getCategory(),model.getAuthor(),model.getCondition(),model.getISBN(),model.getSellerNumber(),model.getSellerName(),model.getThumbnail()));
                 //click listener
                 holder.cardView.setOnClickListener(new View.OnClickListener() {

@@ -13,11 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,27 +35,36 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class SearchBook extends AppCompatActivity {
+public class SearchBook extends AppCompatActivity
+{
     FirebaseAuth mFirebaseAuth;
     List<CategoryHandler> catBooks;
     private NavigationView navigationView;
     private DrawerLayout mdrawer;
+    private Button searchBTN;
+    private EditText searchBookET;
     private ActionBarDrawerToggle mToggle;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,databaseReference2;
     private FirebaseUser user;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_book);
-        RecyclerView rv = (RecyclerView) findViewById(R.id.recyclerviewSearch_id);
-        rv.setNestedScrollingEnabled(false);
-        catBooks=new ArrayList<>();
+        searchBTN = findViewById(R.id.searchBTN);
+        searchBookET = findViewById(R.id.searchBookET);
+
+        databaseReference2=FirebaseDatabase.getInstance().getReference().child("Books");
 
         mFirebaseAuth=FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -116,7 +135,64 @@ public class SearchBook extends AppCompatActivity {
                 return true;
             }
         });
+
+        searchBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+                if (TextUtils.isEmpty(searchBookET.getText().toString().trim()))
+                {
+                    searchBookET.setError("Enter a book Name");
+                }
+                else
+                {
+                    String search=searchBookET.getText().toString();
+                    searchBooks(search);
+                }
+            }
+        });
     }
+
+    private void searchBooks(final String search)
+    {
+        catBooks=new ArrayList<>();
+        ValueEventListener eventListener = new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Boolean found;
+                for(DataSnapshot ds : dataSnapshot.getChildren())
+                {
+                    String bookName = ds.child("title").getValue(String.class);
+                    found = bookName.contains(search);
+                    if (found==true)
+                    {
+                        String price = ds.child("price").getValue(String.class);
+                        String category = ds.child("category").getValue(String.class);
+                        String sellerNumber = ds.child("sellerNumber").getValue(String.class);
+                        String sellerName = ds.child("sellerName").getValue(String.class);
+                        String author = ds.child("author").getValue(String.class);
+                        String condition = ds.child("condition").getValue(String.class);
+                        String ISBN = ds.child("ISBN").getValue(String.class);
+                        String thumbnail = ds.child("thumbnail").getValue(String.class);
+                        catBooks.add(new CategoryHandler(bookName,price,category,author,condition,ISBN,sellerNumber,sellerName,thumbnail));
+
+                        RecyclerView rv=(RecyclerView) findViewById(R.id.recyclerviewSearch_id);
+                        RecyclerViewAdapter rva=new RecyclerViewAdapter(SearchBook.this,catBooks);
+                        rv.setLayoutManager(new GridLayoutManager(SearchBook.this,2));
+                        rv.setNestedScrollingEnabled(false);
+                        rv.setAdapter(rva);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        databaseReference2.addListenerForSingleValueEvent(eventListener);
+    }
+
 
     public class HamburgerDrawable extends DrawerArrowDrawable {
 

@@ -14,6 +14,7 @@ import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +29,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class HomeActivity extends AppCompatActivity {
   FirebaseAuth mFirebaseAuth;
@@ -52,21 +61,23 @@ public class HomeActivity extends AppCompatActivity {
       businessBTN,
       englishBTN;
   private DatabaseReference databaseReference;
+  Query databaseReference2;
   private FirebaseUser user;
   String name;
+  List<CategoryHandler> catBooks;
 
-  String graphicsCategory = "Books/GraphicsDesign";
-  String artsCategory = "Books/Arts";
-  String lawsCategory = "Books/Law";
-  String compSciCategory = "Books/ComputerScience";
-  String tourismCategory = "Books/Tourism";
-  String psychoCategory = "Books/Psychology";
-  String biologyCategory = "Books/Biology";
-  String englishCategory = "Books/English";
-  String mathsCategory = "Books/Mathematics";
-  String businessCategory = "Books/BusinessManagement";
-  String physicsCategory = "Books/PhysicalScience";
-  String chemistryCategory = "Books/Chemistry";
+  String graphicsCategory = "GraphicsDesign";
+  String artsCategory = "BA";
+  String lawsCategory = "Law";
+  String compSciCategory = "ComputerScience";
+  String tourismCategory = "Tourism";
+  String psychoCategory = "Psychology";
+  String biologyCategory = "Biology";
+  String englishCategory = "English";
+  String mathsCategory = "Mathematics";
+  String businessCategory = "BusinessManagement";
+  String physicsCategory = "PhysicalScience";
+  String chemistryCategory = "Chemistry";
 
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   @Override
@@ -108,10 +119,40 @@ public class HomeActivity extends AppCompatActivity {
     viewPager = (ViewPager) findViewById(R.id.SlideViewPager);
     mDotsSlider = (LinearLayout) findViewById(R.id.dots);
 
-    sliderAdapter = new SliderAdapter(this);
-    viewPager.setAdapter(sliderAdapter);
-    addDotsSlider(0);
-    viewPager.addOnPageChangeListener(viewListener);
+      catBooks=new ArrayList<>();
+      databaseReference2 = FirebaseDatabase.getInstance().getReference("Books").limitToLast(10);
+      databaseReference2.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot snapshot)
+          {
+              for (DataSnapshot ds: snapshot.getChildren())
+              {
+                  String title = ds.child("title").getValue(String.class);
+                  String price = ds.child("price").getValue(String.class);
+                  String category = ds.child("category").getValue(String.class);
+                  String sellerNumber = ds.child("sellerNumber").getValue(String.class);
+                  String sellerName = ds.child("sellerName").getValue(String.class);
+                  String author = ds.child("author").getValue(String.class);
+                  String condition = ds.child("condition").getValue(String.class);
+                  String ISBN = ds.child("ISBN").getValue(String.class);
+                  String thumbnail = ds.child("thumbnail").getValue(String.class);
+                  catBooks.add(new CategoryHandler(title,price,category,author,condition,ISBN,sellerNumber,sellerName,thumbnail));
+              }
+              sliderAdapter = new SliderAdapter(HomeActivity.this,catBooks);
+              viewPager.setAdapter(sliderAdapter);
+              addDotsSlider(0);
+              viewPager.addOnPageChangeListener(viewListener);
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError error)
+          {
+              // Getting Post failed, log a message
+              Log.w(TAG, "onCancelled", error.toException());
+              // ...
+          }
+      });
+
 
     mToggle.setDrawerArrowDrawable(new HamburgerDrawable(this));
 
@@ -324,7 +365,7 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   public void addDotsSlider(int indicator) {
-    mdots = new TextView[6];
+    mdots = new TextView[catBooks.size()];
     mDotsSlider.removeAllViews();
 
     for (int i = 0; i < mdots.length; i++) {
