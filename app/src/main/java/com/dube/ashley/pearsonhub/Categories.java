@@ -164,7 +164,6 @@ public class Categories extends AppCompatActivity
         catBooks=new ArrayList<>();
 
         options= new FirebaseRecyclerOptions.Builder<CategoryHandler>().setQuery(FirebaseDatabase.getInstance().getReference("Books").orderByChild("category").startAt(theCat).endAt(theCat),CategoryHandler.class).build();
-        // options= new FirebaseRecyclerOptions.Builder<CategoryHandler>().setQuery(databaseReference2,CategoryHandler.class).build();
         adapter=new FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder>(options)
         {
 

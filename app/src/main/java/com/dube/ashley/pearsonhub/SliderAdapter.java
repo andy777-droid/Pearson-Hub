@@ -1,6 +1,7 @@
 package com.dube.ashley.pearsonhub;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,13 +40,8 @@ public class SliderAdapter extends PagerAdapter
     }
 
 
-    //public int[] slider_images = {R.drawable.accounting, R.drawable.arts, R.drawable.english, R.drawable.maths, R.drawable.science, R.drawable.business};
-   // public String[] slider_titles = {"Accounting", "Arts and Culture", "English", "Mathematics", "Science", "Business Management"};
-    //public String[] slider_prices = {"750", "550", "650", "450", "350", "480"};
-
     @Override
     public int getCount() {
-        System.out.println("The size of the List: "+catBooks.size());
         return catBooks.size();
     }
 
@@ -56,17 +52,14 @@ public class SliderAdapter extends PagerAdapter
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position)
+    public Object instantiateItem(@NonNull ViewGroup container, final int position)
     {
-        System.out.println("The first link: "+catBooks.get(0).getThumbnail());
         layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.slider_layout, container, false);
 
         ImageView sliderimage = (ImageView) view.findViewById(R.id.slider_image);
         TextView slidertitle = (TextView) view.findViewById(R.id.slider_title);
         TextView sliderprice = (TextView) view.findViewById(R.id.slider_price);
-
-        //sliderimage.setImageResource(slider_images[position]);
         Picasso.Builder builder = new Picasso.Builder(context);
         builder.listener(new Picasso.Listener()
         {
@@ -80,6 +73,23 @@ public class SliderAdapter extends PagerAdapter
         builder.build().load(catBooks.get(position).getThumbnail()).into(sliderimage);
         slidertitle.setText(catBooks.get(position).getTitle());
         sliderprice.setText("R " + catBooks.get(position).getPrice());
+
+        sliderimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent=new Intent(context,Book.class);
+                intent.putExtra("Thumbnail",catBooks.get(position).getThumbnail());
+                intent.putExtra("Title",catBooks.get(position).getTitle());
+                intent.putExtra("Price",catBooks.get(position).getPrice());
+                intent.putExtra("SellerNumber",catBooks.get(position).getSellerNumber());
+                intent.putExtra("SellerName",catBooks.get(position).getSellerName());
+                intent.putExtra("Author",catBooks.get(position).getAuthor());
+                intent.putExtra("Condition",catBooks.get(position).getCondition());
+                intent.putExtra("ISBN",catBooks.get(position).getISBN());
+                context.startActivity(intent);
+            }
+        });
 
         container.addView(view);
         return view;
