@@ -12,7 +12,6 @@ public class CategoryHandler
     private String ISBN;
     private String thumbnail;
 
-
     public CategoryHandler()
     {
 

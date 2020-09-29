@@ -80,42 +80,42 @@ public class SignUpActivity extends AppCompatActivity
             {
                 if (task.isSuccessful())
                 {
-                   mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>()
-                   {
-                       @Override
-                       public void onComplete(@NonNull Task<Void> tasks)
-                       {
+                    mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>()
+                    {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> tasks)
+                        {
 
-                           FirebaseUser theUser=mAuth.getCurrentUser();
-                           String userId=theUser.getUid();
-                           databaseReference=FirebaseDatabase.getInstance().getReference("Users").child(userId);
-                           HashMap<String,String> hashMap=new HashMap<>();
-                           hashMap.put("userId",userId);
-                           hashMap.put("firstname",ETfirstName);
-                           hashMap.put("lastname",ETlastName);
-                           hashMap.put("email",ETeditTextTextEmailAddress);
-                           hashMap.put("cellNumber",ETcellNumber);
-                           databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                               @Override
-                               public void onComplete(@NonNull Task<Void> task)
-                               {
-                                   if(task.isSuccessful())
-                                   {
-                                       Toast.makeText(SignUpActivity.this,"Registration Successful, please click the link that has been emailed to you",Toast.LENGTH_LONG).show();
-                                       setContentView(R.layout.activity_login);
-                                   }
-                                   else
-                                   {
-                                       Toast.makeText(SignUpActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
-                                   }
-                               }
-                           });
-                       }
-                   });
+                            FirebaseUser theUser=mAuth.getCurrentUser();
+                            String userId=theUser.getUid();
+                            databaseReference=FirebaseDatabase.getInstance().getReference("Users").child(userId);
+                            HashMap<String,String> hashMap=new HashMap<>();
+                            hashMap.put("userId",userId);
+                            hashMap.put("firstname",ETfirstName);
+                            hashMap.put("lastname",ETlastName);
+                            hashMap.put("email",ETeditTextTextEmailAddress);
+                            hashMap.put("cellNumber",ETcellNumber);
+                            databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task)
+                                {
+                                    if(task.isSuccessful())
+                                    {
+                                        Toast.makeText(SignUpActivity.this,"Registration Successful, please click the link that has been emailed to you",Toast.LENGTH_LONG).show();
+                                        setContentView(R.layout.activity_login);
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(SignUpActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                        }
+                    });
 
                 }
                 else
-                    {
+                {
                     Toast.makeText(SignUpActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
                 }
             }
