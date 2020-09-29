@@ -35,6 +35,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class SellBook extends AppCompatActivity {
   TextView name, number, isbn, author, condition, price, textbookname;
@@ -203,6 +204,8 @@ public class SellBook extends AppCompatActivity {
                     folder.child(titl + imageData.getLastPathSegment());
 
                 if (validation(is, au, con, pri, titl) == true) {
+                  String uuid = UUID.randomUUID().toString();
+                  final String uniqueID=uuid.replace("-", "");
                   imagename
                       .putFile(imageData)
                       .addOnSuccessListener(
@@ -220,7 +223,7 @@ public class SellBook extends AppCompatActivity {
                                               FirebaseDatabase.getInstance()
                                                   .getReference()
                                                   .child("Books")
-                                                  .child(userID);
+                                                  .child(uniqueID);
 
                                           HashMap<String, String> hash = new HashMap<>();
                                           hash.put("ISBN", is);
