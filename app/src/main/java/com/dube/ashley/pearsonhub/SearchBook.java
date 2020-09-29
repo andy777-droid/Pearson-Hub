@@ -147,7 +147,7 @@ public class SearchBook extends AppCompatActivity
                 }
                 else
                 {
-                    String search=searchBookET.getText().toString();
+                    String search=searchBookET.getText().toString().trim().toLowerCase();
                     searchBooks(search);
                 }
             }
@@ -164,10 +164,12 @@ public class SearchBook extends AppCompatActivity
                 Boolean found;
                 for(DataSnapshot ds : dataSnapshot.getChildren())
                 {
-                    String bookName = ds.child("title").getValue(String.class);
+                    search.toLowerCase();
+                    String bookName = ds.child("title").getValue(String.class).toLowerCase();
                     found = bookName.contains(search);
                     if (found==true)
                     {
+                        String bookNameProper=ds.child("title").getValue(String.class);
                         String price = ds.child("price").getValue(String.class);
                         String category = ds.child("category").getValue(String.class);
                         String sellerNumber = ds.child("sellerNumber").getValue(String.class);
@@ -176,7 +178,7 @@ public class SearchBook extends AppCompatActivity
                         String condition = ds.child("condition").getValue(String.class);
                         String ISBN = ds.child("ISBN").getValue(String.class);
                         String thumbnail = ds.child("thumbnail").getValue(String.class);
-                        catBooks.add(new CategoryHandler(bookName,price,category,author,condition,ISBN,sellerNumber,sellerName,thumbnail));
+                        catBooks.add(new CategoryHandler(bookNameProper,price,category,author,condition,ISBN,sellerNumber,sellerName,thumbnail));
 
                         RecyclerView rv=(RecyclerView) findViewById(R.id.recyclerviewSearch_id);
                         RecyclerViewAdapter rva=new RecyclerViewAdapter(SearchBook.this,catBooks);
