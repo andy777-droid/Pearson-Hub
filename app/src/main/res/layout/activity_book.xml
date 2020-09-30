@@ -26,8 +26,7 @@
                 android:layout_marginTop="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/business" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView"
@@ -124,7 +123,7 @@
                 android:layout_marginTop="50dp"
                 android:background="@drawable/category_buttons"
                 android:drawableRight="@drawable/ic_wishlist"
-                android:paddingRight="30px"
+                android:paddingRight="20dp"
                 android:text="Wishlist"
                 android:textColor="#FFFFFF"
                 android:textSize="18dp"

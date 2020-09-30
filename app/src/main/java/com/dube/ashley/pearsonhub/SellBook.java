@@ -17,9 +17,11 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,19 +59,20 @@ public class SellBook extends AppCompatActivity {
   private StorageReference folder;
   final String[] arraySpinner =
       new String[] {
-        "GraphicsDesign",
+        "Graphics Design",
         "Psychology",
         "Tourism",
-        "ComputerScience",
+        "Computer Science",
         "Law",
-        "BA",
+        "Bachelor of Arts",
         "Mathematics",
         "Biology",
-        "PhysicalScience",
+        "Physical Science",
         "Chemistry",
-        "BusinessManagement",
-        "English"
+        "Business Management",
+        "English Language"
       };
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +171,50 @@ public class SellBook extends AppCompatActivity {
         });
   }
 
+
+ public String getCategoryValue(int value){
+    String correct = "";
+   switch(value){
+     case 0:
+       correct = "GraphicsDesign";
+       break;
+     case 1:
+       correct = "Psychology";
+       break;
+     case 2:
+       correct = "Tourism";
+       break;
+     case 3:
+       correct = "ComputerScience";
+       break;
+     case 4:
+       correct = "Law";
+       break;
+     case 5:
+       correct = "BA";
+       break;
+     case 6:
+       correct = "Mathematics";
+       break;
+     case 7:
+       correct = "Biology";
+       break;
+     case 8:
+       correct = "PhysicalScience";
+       break;
+     case 9:
+       correct = "Chemistry";
+       break;
+     case 10:
+       correct = "BusinessManagement";
+       break;
+     case 11:
+       correct = "English";
+       break;
+   }
+    return correct;
+ }
+
   @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     if (mToggle.onOptionsItemSelected(item)) {
@@ -202,7 +249,7 @@ public class SellBook extends AppCompatActivity {
                   is = isbn.getText().toString();
                   au = author.getText().toString();
                   index = myspinner.getSelectedItemPosition();
-                  cat = arraySpinner[index];
+                  cat = getCategoryValue(index);
                   con = condition.getText().toString();
                   pri = price.getText().toString();
                   nam = name.getText().toString();
