@@ -61,7 +61,7 @@ public class Categories extends AppCompatActivity
         setContentView(R.layout.activity_categories);
         Intent intent=getIntent();
 
-        String branch=intent.getExtras().getString("branch");
+        final String branch=intent.getExtras().getString("branch");
         String categoryName=intent.getExtras().getString("categoryName");
         catName=(TextView) findViewById(R.id.categoryName);
         catName.setText(categoryName);
@@ -77,9 +77,8 @@ public class Categories extends AppCompatActivity
         getSupportActionBar().setElevation(0);
         //Request Books
         rv=(RecyclerView) findViewById(R.id.recyclerview_id);
-        loadData(this,branch);
-        rv.setNestedScrollingEnabled(false);
-        rv.setLayoutManager(new GridLayoutManager(this,2));
+
+
 
         mToggle.setDrawerArrowDrawable(new Categories.HamburgerDrawable(this));
 
@@ -97,6 +96,7 @@ public class Categories extends AppCompatActivity
                 View header = navigationView.getHeaderView(0);
                 TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
                 tv.setText( curUsers.getFirstname()+" "+curUsers.getLastname());
+                loadData(Categories.this,branch, curUsers.getEmail());
             }
 
             @Override
@@ -112,7 +112,8 @@ public class Categories extends AppCompatActivity
 
         mdrawer.addDrawerListener(mToggle);
         mToggle.syncState();
-
+        rv.setNestedScrollingEnabled(false);
+        rv.setLayoutManager(new GridLayoutManager(this,2));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("");
         getSupportActionBar().setElevation(0);
@@ -157,7 +158,7 @@ public class Categories extends AppCompatActivity
     }
 
 
-    private void loadData(Context mContext, final String theCat)
+    private void loadData(Context mContext, final String theCat, final String theEmail)
     {
         final Context myContext;
         myContext = mContext;
@@ -205,6 +206,8 @@ public class Categories extends AppCompatActivity
                         intent.putExtra("Author",catBooks.get(position).getAuthor());
                         intent.putExtra("Condition",catBooks.get(position).getCondition());
                         intent.putExtra("ISBN",catBooks.get(position).getISBN());
+                        intent.putExtra("email",theEmail);
+                        intent.putExtra("category",catBooks.get(position).getCategory());
                         myContext.startActivity(intent);
                     }
                 });

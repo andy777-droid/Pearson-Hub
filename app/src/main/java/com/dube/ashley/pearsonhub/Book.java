@@ -7,16 +7,24 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,7 +33,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 
 public class Book extends AppCompatActivity {
@@ -35,48 +50,57 @@ public class Book extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
     private DatabaseReference databaseReference;
     private FirebaseUser user;
-    private TextView tvTitle,tvPrice,tvSellerNumber,tvAuthor,tvCondition,tvISBN,tvSellerName;
+    private TextView tvTitle, tvPrice, tvSellerNumber, tvAuthor, tvCondition, tvISBN, tvSellerName;
     private ImageView img;
+    Button wishBtn;
+    User curUsers;
+    List<CategoryHandler> catBooks;
+    FirebaseRecyclerOptions<CategoryHandler> options;
+    FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder> adapter;
+
+    String userID, titl, is, au, cat, con, pri, nam, num, email;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
 
-        tvTitle=(TextView) findViewById(R.id.textView);
-        tvPrice=(TextView) findViewById(R.id.textView2);
-        tvSellerNumber=(TextView) findViewById(R.id.textView12);
-        tvSellerName=(TextView) findViewById(R.id.textView11);
-        tvAuthor=(TextView) findViewById(R.id.textView9);
-        tvCondition=(TextView) findViewById(R.id.textView10);
-        tvISBN=(TextView) findViewById(R.id.textView8);
-        img=(ImageView) findViewById(R.id.imageView4);
+        wishBtn = (Button) findViewById(R.id.wishlistButton);
+        tvTitle = (TextView) findViewById(R.id.textView);
+        tvPrice = (TextView) findViewById(R.id.textView2);
+        tvSellerNumber = (TextView) findViewById(R.id.textView12);
+        tvSellerName = (TextView) findViewById(R.id.textView11);
+        tvAuthor = (TextView) findViewById(R.id.textView9);
+        tvCondition = (TextView) findViewById(R.id.textView10);
+        tvISBN = (TextView) findViewById(R.id.textView8);
+        img = (ImageView) findViewById(R.id.imageView4);
 
-        Intent intent=getIntent();
+        final Intent intent = getIntent();
 
-        String image=intent.getExtras().getString("Thumbnail");
-        String title =intent.getExtras().getString("Title");
-        String price=intent.getExtras().getString("Price");
-        String sellerNumber=intent.getExtras().getString("SellerNumber");
-        String sellerName=intent.getExtras().getString("SellerName");
-        String author=intent.getExtras().getString("Author");
-        String condition=intent.getExtras().getString("Condition");
-        String isbn=intent.getExtras().getString("ISBN");
+        final String image = intent.getExtras().getString("Thumbnail");
+        final String title = intent.getExtras().getString("Title");
+        final String price = intent.getExtras().getString("Price");
+        final String sellerNumber = intent.getExtras().getString("SellerNumber");
+        final String sellerName = intent.getExtras().getString("SellerName");
+        final String author = intent.getExtras().getString("Author");
+        final String condition = intent.getExtras().getString("Condition");
+        final String isbn = intent.getExtras().getString("ISBN");
+        final String category = intent.getExtras().getString("category");
+        final String email = intent.getExtras().getString("email");
+
+
 
         tvTitle.setText(title);
-        tvPrice.setText("R "+price);
+        tvPrice.setText("R " + price);
         tvSellerNumber.setText(sellerNumber);
         tvAuthor.setText(author);
         tvCondition.setText(String.valueOf(condition));
         tvISBN.setText(isbn);
         tvSellerName.setText(sellerName);
         Picasso.Builder builder = new Picasso.Builder(this);
-        builder.listener(new Picasso.Listener()
-        {
+        builder.listener(new Picasso.Listener() {
             @Override
-            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
-            {
+            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
                 exception.printStackTrace();
             }
         });
@@ -84,26 +108,23 @@ public class Book extends AppCompatActivity {
         //img.setImageResource(image);
 
 
-        mFirebaseAuth=FirebaseAuth.getInstance();
+        mFirebaseAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
-        databaseReference.addValueEventListener(new ValueEventListener()
-        {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot)
-            {
-                User curUsers =snapshot.getValue(User.class);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                curUsers = snapshot.getValue(User.class);
                 assert curUsers != null;
                 NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
                 View header = navigationView.getHeaderView(0);
                 TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
-                tv.setText( curUsers.getFirstname()+" "+curUsers.getLastname());
+                tv.setText(curUsers.getFirstname() + " " + curUsers.getLastname());
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error)
-            {
-                Toast.makeText(Book.this,error.getMessage(),Toast.LENGTH_LONG).show();
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Book.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -124,7 +145,7 @@ public class Book extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.menu_home:
                         Intent home = new Intent(Book.this, HomeActivity.class);
                         startActivity(home);
@@ -153,7 +174,65 @@ public class Book extends AppCompatActivity {
                 return true;
             }
         });
+
+        wishBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wishBtn.setOnClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                String uuid = UUID.randomUUID().toString();
+                                final String uniqueID = uuid.replace("-", "");
+
+
+                                DatabaseReference imagestore =
+                                        FirebaseDatabase.getInstance()
+                                                .getReference()
+                                                .child("Wishlist")
+                                                .child(uniqueID);
+
+
+
+
+                                HashMap<String, String> hash = new HashMap<>();
+                                hash.put("ISBN", isbn);
+                                hash.put("author", author);
+                                hash.put("category", category);
+                                hash.put("condition", condition);
+                                hash.put("email", email);
+                                hash.put("price", price);
+                                hash.put("sellerName", sellerName);
+                                hash.put("sellerNumber", sellerNumber);
+                                hash.put("thumbnail", image);
+                                hash.put("title", title);
+
+                                imagestore.setValue(hash).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+                                        Toast.makeText(
+                                                Book.this,
+                                                "Uploaded",
+                                                Toast.LENGTH_SHORT)
+                                                .show();
+                                        Intent i =
+                                                new Intent(
+                                                        Book.this, Wishlist.class);
+                                        startActivity(i);
+
+
+                                    }
+                                });
+
+                            }
+                        });
+            }
+
+        });
     }
+
 
     public class HamburgerDrawable extends DrawerArrowDrawable {
 
@@ -170,6 +249,7 @@ public class Book extends AppCompatActivity {
             setBarThickness(16.0f);
             setGapSize(20.0f);
         }
+
     }
 
     @Override
@@ -179,4 +259,6 @@ public class Book extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
