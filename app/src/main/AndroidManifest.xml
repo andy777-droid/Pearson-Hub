@@ -13,7 +13,8 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".EditBook" />
-        <activity android:name=".Listings" />
+        <activity android:name=".Listings"
+            />
         <activity android:name=".SearchBook" />
         <activity android:name=".SellBook" />
         <activity android:name=".Wishlist" />

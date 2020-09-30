@@ -212,17 +212,21 @@
                         android:layout_width="0dp"
                         android:layout_height="65dp"
                         android:layout_columnWeight="1"
-                        android:padding="10dp">
+                        android:layout_marginRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp">
 
                         <Button
                             android:id="@+id/saveBook"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/rounder_image_null"
-                            android:drawableRight="@drawable/image"
+                            android:foreground="@drawable/image"
+                            android:foregroundGravity="center"
                             android:gravity="center"
                             android:onClick="Upload"
-                            android:paddingRight="35dp"
                             android:textColor="#FFFFFF"
                             tools:ignore="HardcoreText" />
                     </LinearLayout>
@@ -239,11 +243,11 @@
                     android:layout_marginBottom="15dp"
                     android:background="@drawable/rounded_button"
                     android:drawableRight="@drawable/list_white"
+                    android:paddingRight="20dp"
                     android:text="List"
                     android:textColor="#FFFFFF"
                     android:textSize="18dp"
-                    tools:ignore="HardcoreText"
-                    />
+                    tools:ignore="HardcoreText" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>

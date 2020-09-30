@@ -7,14 +7,24 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +33,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Wishlist extends AppCompatActivity {
@@ -33,6 +47,11 @@ public class Wishlist extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
     private DatabaseReference databaseReference;
     private FirebaseUser user;
+    List<CategoryHandler> catBooks;
+    FirebaseRecyclerOptions<CategoryHandler> options;
+    FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder> adapter;
+    RecyclerView rv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +60,7 @@ public class Wishlist extends AppCompatActivity {
 
         mFirebaseAuth=FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
+        rv=(RecyclerView) findViewById(R.id.recyclerviewWishlist_id);
         databaseReference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
         databaseReference.addValueEventListener(new ValueEventListener()
         {
@@ -53,6 +73,7 @@ public class Wishlist extends AppCompatActivity {
                 View header = navigationView.getHeaderView(0);
                 TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
                 tv.setText( curUsers.getFirstname()+" "+curUsers.getLastname());
+                loadData(Wishlist.this, curUsers.getEmail());
             }
 
             @Override
@@ -64,6 +85,10 @@ public class Wishlist extends AppCompatActivity {
 
         mdrawer = (DrawerLayout) findViewById(R.id.wishlist_drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
+
+        //Request Books
+        rv.setNestedScrollingEnabled(false);
+        rv.setLayoutManager(new GridLayoutManager(this,1));
 
         mdrawer.addDrawerListener(mToggle);
         mToggle.syncState();
@@ -108,6 +133,66 @@ public class Wishlist extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void loadData(Context mContext,String UserEmail)
+    {
+        Log.d("Seller Number Loaddata ",UserEmail);
+        final Context myContext;
+        myContext = mContext;
+        catBooks=new ArrayList<>();
+
+        options= new FirebaseRecyclerOptions.Builder<CategoryHandler>().setQuery(FirebaseDatabase.getInstance().getReference("Wishlist").orderByChild("email").equalTo(UserEmail),CategoryHandler.class).build();
+        adapter=new FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder>(options)
+        {
+
+            @NonNull
+            @Override
+            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+            {
+                View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_book_wishlist,parent,false);
+                return new MyViewHolder(view);
+            }
+            @Override
+            protected void onBindViewHolder(@NonNull MyViewHolder holder, final int position, @NonNull CategoryHandler model)
+            {
+
+                holder.wishlistTitle.setText(model.getTitle());
+                holder.wishlistPrice.setText("R "+model.getPrice());
+                Picasso.Builder builder = new Picasso.Builder(myContext);
+                builder.listener(new Picasso.Listener()
+                {
+                    @Override
+                    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
+                    {
+                        exception.printStackTrace();
+                    }
+                });
+                builder.build().load(model.getThumbnail()).into(holder.WishlistImageView);
+
+                catBooks.add(new CategoryHandler(model.getTitle(),model.getPrice(),model.getCategory(),model.getAuthor(),model.getCondition(),model.getISBN(),model.getSellerNumber(),model.getSellerName(),model.getThumbnail()));
+                holder.WishlistImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Intent intent=new Intent(myContext,Book.class);
+                        intent.putExtra("Thumbnail",catBooks.get(position).getThumbnail());
+                        intent.putExtra("Title",catBooks.get(position).getTitle());
+                        intent.putExtra("Price",catBooks.get(position).getPrice());
+                        intent.putExtra("SellerNumber",catBooks.get(position).getSellerNumber());
+                        intent.putExtra("SellerName",catBooks.get(position).getSellerName());
+                        intent.putExtra("Author",catBooks.get(position).getAuthor());
+                        intent.putExtra("Condition",catBooks.get(position).getCondition());
+                        intent.putExtra("ISBN",catBooks.get(position).getISBN());
+                        myContext.startActivity(intent);
+
+                    }
+                });
+
+            }
+        };
+        adapter.startListening();
+        rv.setAdapter(adapter);
     }
 
     public class HamburgerDrawable extends DrawerArrowDrawable {

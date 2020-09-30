@@ -187,73 +187,7 @@ public class EditBook extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean validation(
-            String ISBN, String AUTHOR, String CONDITION, String PRICE, String TITLE) {
-
-        boolean valid = true;
-
-        if (!ISBN.matches("^[0-9]*$")) {
-            bookIsbn.setError("ISBN must contain numbers only");
-            bookIsbn.setFocusable(true);
-            valid = false;
-        } else {
-            if (ISBN.length() == 0) {
-                bookIsbn.setError("ISBN must contain a value");
-                bookIsbn.setFocusable(true);
-                valid = false;
-            }
-        }
-
-        if (AUTHOR.length() == 0) {
-            valid = false;
-            bookAuthor.setError("Author must contain a value");
-            bookAuthor.setFocusable(true);
-
-        } else {
-            int len = AUTHOR.length();
-            for (int i = 0; i < len; i++) {
-                if ((Character.isLetter(AUTHOR.charAt(i)) == false)) {
-                    valid = false;
-                    bookAuthor.setError("Author must contain letters only");
-                    bookAuthor.setFocusable(true);
-                    break;
-                }
-            }
-        }
-
-        if (CONDITION.equals("") || CONDITION.equals(null)) {
-            valid = false;
-            bookCondition.setError("Please provide a condition");
-            bookCondition.setFocusable(true);
-        } else {
-            int value = Integer.parseInt(CONDITION);
-            if (value < 0 || value > 10) {
-
-                valid = false;
-                bookCondition.setError("Condition must be between 0 and 10");
-                bookCondition.setFocusable(true);
-            }
-        }
-
-        try {
-            double d = Double.parseDouble(PRICE);
-        } catch (NumberFormatException nfe) {
-            valid = false;
-            bookPrice.setError("Price must be a digit");
-            bookPrice.setFocusable(true);
-        }
-
-        if (TITLE.length() == 0) {
-            valid = false;
-            textbookName.setError("Please enter a title");
-            textbookName.setFocusable(true);
-        }
-
-        return valid;
-    }
-
-
-    public void update(View view)
+        public void update(View view)
     {
 
         textbookName= (EditText) findViewById(R.id.textbookName);

@@ -137,9 +137,6 @@ public class Listings extends AppCompatActivity {
             }
         });
 
-
-
-
     }
 
     private void loadData(Context mContext,String theSellerNum)
