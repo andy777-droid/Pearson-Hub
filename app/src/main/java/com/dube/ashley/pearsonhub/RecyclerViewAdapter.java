@@ -16,10 +16,12 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapter.MyViewHolder>
 {
+    private String theEmail;
     private Context mContext;
     private List<CategoryHandler> mData;
-    public RecyclerViewAdapter(Context mContext, List<CategoryHandler> mData)
+    public RecyclerViewAdapter(Context mContext, List<CategoryHandler> mData, String theEmail)
     {
+        this.theEmail = theEmail;
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -62,6 +64,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
                 intent.putExtra("Author",mData.get(position).getAuthor());
                 intent.putExtra("Condition",mData.get(position).getCondition());
                 intent.putExtra("ISBN",mData.get(position).getISBN());
+                intent.putExtra("email",theEmail);
+                intent.putExtra("category",mData.get(position).getCategory());
                 mContext.startActivity(intent);
 
             }

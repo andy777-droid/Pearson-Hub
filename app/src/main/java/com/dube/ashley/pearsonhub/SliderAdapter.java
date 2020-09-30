@@ -33,8 +33,10 @@ public class SliderAdapter extends PagerAdapter
     Context context;
     LayoutInflater layoutInflater;
     private List<CategoryHandler> catBooks;
+    String theEmail;
 
-    public SliderAdapter(Context context, List<CategoryHandler> catBooks){
+    public SliderAdapter(Context context, List<CategoryHandler> catBooks, final String theEmail){
+        this.theEmail = theEmail;
         this.context = context;
         this.catBooks=catBooks;
     }
@@ -87,6 +89,8 @@ public class SliderAdapter extends PagerAdapter
                 intent.putExtra("Author",catBooks.get(position).getAuthor());
                 intent.putExtra("Condition",catBooks.get(position).getCondition());
                 intent.putExtra("ISBN",catBooks.get(position).getISBN());
+                intent.putExtra("email",theEmail);
+                intent.putExtra("category",catBooks.get(position).getCategory());
                 context.startActivity(intent);
             }
         });

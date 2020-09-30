@@ -55,6 +55,7 @@ public class SearchBook extends AppCompatActivity
     private ActionBarDrawerToggle mToggle;
     private DatabaseReference databaseReference,databaseReference2;
     private FirebaseUser user;
+    User curUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -74,7 +75,7 @@ public class SearchBook extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
-                User curUsers =snapshot.getValue(User.class);
+                curUsers =snapshot.getValue(User.class);
                 assert curUsers != null;
                 NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
                 View header = navigationView.getHeaderView(0);
@@ -148,13 +149,13 @@ public class SearchBook extends AppCompatActivity
                 else
                 {
                     String search=searchBookET.getText().toString().trim().toLowerCase();
-                    searchBooks(search);
+                    searchBooks(search, curUsers.getEmail());
                 }
             }
         });
     }
 
-    private void searchBooks(final String search)
+    private void searchBooks(final String search, final String theEmail)
     {
         catBooks=new ArrayList<>();
         ValueEventListener eventListener = new ValueEventListener()
@@ -178,10 +179,11 @@ public class SearchBook extends AppCompatActivity
                         String condition = ds.child("condition").getValue(String.class);
                         String ISBN = ds.child("ISBN").getValue(String.class);
                         String thumbnail = ds.child("thumbnail").getValue(String.class);
+
                         catBooks.add(new CategoryHandler(bookNameProper,price,category,author,condition,ISBN,sellerNumber,sellerName,thumbnail));
 
                         RecyclerView rv=(RecyclerView) findViewById(R.id.recyclerviewSearch_id);
-                        RecyclerViewAdapter rva=new RecyclerViewAdapter(SearchBook.this,catBooks);
+                        RecyclerViewAdapter rva=new RecyclerViewAdapter(SearchBook.this,catBooks, theEmail);
                         rv.setLayoutManager(new GridLayoutManager(SearchBook.this,2));
                         rv.setNestedScrollingEnabled(false);
                         rv.setAdapter(rva);

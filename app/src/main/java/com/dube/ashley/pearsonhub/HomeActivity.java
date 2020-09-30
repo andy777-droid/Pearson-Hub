@@ -99,7 +99,9 @@ public class HomeActivity extends AppCompatActivity {
                         View header = navigationView.getHeaderView(0);
                         TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
                         tv.setText(curUsers.getFirstname() + " " + curUsers.getLastname());
+                        sliderAdapter = new SliderAdapter(HomeActivity.this,catBooks, curUsers.getEmail());
                     }
+
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
@@ -136,9 +138,10 @@ public class HomeActivity extends AppCompatActivity {
                     String condition = ds.child("condition").getValue(String.class);
                     String ISBN = ds.child("ISBN").getValue(String.class);
                     String thumbnail = ds.child("thumbnail").getValue(String.class);
+
                     catBooks.add(new CategoryHandler(title,price,category,author,condition,ISBN,sellerNumber,sellerName,thumbnail));
                 }
-                sliderAdapter = new SliderAdapter(HomeActivity.this,catBooks);
+
                 viewPager.setAdapter(sliderAdapter);
                 addDotsSlider(0);
                 viewPager.addOnPageChangeListener(viewListener);

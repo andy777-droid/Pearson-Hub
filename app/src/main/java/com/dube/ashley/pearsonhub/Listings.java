@@ -75,7 +75,7 @@ public class Listings extends AppCompatActivity {
                 View header = navigationView.getHeaderView(0);
                 TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
                 sellerNumber =curUsers.getCellNumber();
-                loadData(Listings.this,sellerNumber);
+                loadData(Listings.this,sellerNumber, curUsers.getEmail());
                 tv.setText( curUsers.getFirstname()+" "+curUsers.getLastname());
             }
 
@@ -139,7 +139,7 @@ public class Listings extends AppCompatActivity {
 
     }
 
-    private void loadData(Context mContext,String theSellerNum)
+    private void loadData(Context mContext, String theSellerNum, final String theEmail)
     {
         Log.d("Seller Number Loaddata ",theSellerNum);
         final Context myContext;
@@ -192,6 +192,8 @@ public class Listings extends AppCompatActivity {
                         intent.putExtra("Author",catBooks.get(position).getAuthor());
                         intent.putExtra("Condition",catBooks.get(position).getCondition());
                         intent.putExtra("ISBN",catBooks.get(position).getISBN());
+                        intent.putExtra("email",theEmail);
+                        intent.putExtra("category",catBooks.get(position).getCategory());
                         myContext.startActivity(intent);
 
                     }
