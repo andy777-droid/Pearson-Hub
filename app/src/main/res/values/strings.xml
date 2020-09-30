@@ -6,4 +6,10 @@
     <string name="r">R</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="invalid_name">Please Enter a Title</string>
+    <string name="invalid_surname">Please Enter Only Numbers</string>
+    <string name="numbersOnly">Please Enter A Price</string>
+    <string name="invalid_ISBN">Please Enter The Correct ISBN Number</string>
+    <string name="auth">Please Enter an Author</string>
+    <string name="condition">Please Enter a Condition Between 1 - 10</string>
 </resources>

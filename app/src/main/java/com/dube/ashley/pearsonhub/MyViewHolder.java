@@ -1,6 +1,7 @@
 package com.dube.ashley.pearsonhub;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,7 +14,7 @@ class MyViewHolder extends RecyclerView.ViewHolder
     ImageView thumbnail,listingsImageView;
     TextView title,price,listingsTitle,listingsPrice;
     CardView cardView,cardView2;
-
+    Button editButton;
     public MyViewHolder(@NonNull View itemView)
     {
         super(itemView);
@@ -28,5 +29,6 @@ class MyViewHolder extends RecyclerView.ViewHolder
         listingsTitle=itemView.findViewById(R.id.listingsTitle);
         listingsPrice=itemView.findViewById(R.id.listingsPrice);
         cardView2=(CardView) itemView.findViewById(R.id.cardViewListings_id);
+        editButton = (Button) itemView.findViewById(R.id.editButton);
     }
 }

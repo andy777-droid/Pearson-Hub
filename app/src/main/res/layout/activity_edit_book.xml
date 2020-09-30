@@ -2,10 +2,12 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/edit_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animationCache="false"
     android:background="#FFFFFF"
-    android:id="@+id/edit_drawer_layout">
+    android:onClick="update">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,11 +18,11 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".SellBook"
             android:paddingLeft="16dp"
             android:paddingTop="16dp"
             android:paddingRight="16dp"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp"
+            tools:context=".SellBook">
 
             <TextView
                 android:id="@+id/label-sell"
@@ -123,19 +125,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/sellerNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_marginBottom="20dp"
-                        android:autofillHints=""
-                        android:background="@drawable/rounded_edits"
-                        android:hint="Seller Number"
-                        android:inputType="phone"
-                        android:paddingLeft="15dp" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content"/>
 
                 <GridLayout
                     android:id="@+id/GridLayout1"
@@ -158,6 +148,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/rounded_button"
+                            android:onClick="update"
                             android:text="Save"
                             android:textColor="#FFFFFF"
                             android:textSize="20dp"

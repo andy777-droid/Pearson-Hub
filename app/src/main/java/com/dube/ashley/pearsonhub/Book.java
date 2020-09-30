@@ -29,7 +29,6 @@ import com.squareup.picasso.Picasso;
 
 
 public class Book extends AppCompatActivity {
-
     FirebaseAuth mFirebaseAuth;
     private NavigationView navigationView;
     private DrawerLayout mdrawer;

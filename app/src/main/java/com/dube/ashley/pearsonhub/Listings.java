@@ -18,6 +18,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,10 +52,13 @@ public class Listings extends AppCompatActivity {
     FirebaseRecyclerOptions<CategoryHandler> options;
     FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder> adapter;
     RecyclerView rv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listings);
+
+
 
         mFirebaseAuth=FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -70,7 +76,7 @@ public class Listings extends AppCompatActivity {
                 TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
                 sellerNumber =curUsers.getCellNumber();
                 loadData(Listings.this,sellerNumber);
-               tv.setText( curUsers.getFirstname()+" "+curUsers.getLastname());
+                tv.setText( curUsers.getFirstname()+" "+curUsers.getLastname());
             }
 
             @Override
@@ -130,6 +136,10 @@ public class Listings extends AppCompatActivity {
                 return true;
             }
         });
+
+
+
+
     }
 
     private void loadData(Context mContext,String theSellerNum)
@@ -153,6 +163,11 @@ public class Listings extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull MyViewHolder holder, final int position, @NonNull CategoryHandler model)
             {
+
+
+
+
+
                 holder.listingsTitle.setText(model.getTitle());
                 holder.listingsPrice.setText("R "+model.getPrice());
                 Picasso.Builder builder = new Picasso.Builder(myContext);
@@ -181,8 +196,28 @@ public class Listings extends AppCompatActivity {
                         intent.putExtra("Condition",catBooks.get(position).getCondition());
                         intent.putExtra("ISBN",catBooks.get(position).getISBN());
                         myContext.startActivity(intent);
+
                     }
                 });
+
+                holder.editButton.setOnClickListener(new View.OnClickListener()
+                {
+                    public void onClick(View v) {
+                        // Perform action on click
+                        Intent intent=new Intent(myContext,EditBook.class);
+                        intent.putExtra("Thumbnail",catBooks.get(position).getThumbnail());
+                        intent.putExtra("Title",catBooks.get(position).getTitle());
+                        intent.putExtra("Price",catBooks.get(position).getPrice());
+                        intent.putExtra("SellerNumber",catBooks.get(position).getSellerNumber());
+                        intent.putExtra("SellerName",catBooks.get(position).getSellerName());
+                        intent.putExtra("Author",catBooks.get(position).getAuthor());
+                        intent.putExtra("Condition",catBooks.get(position).getCondition());
+                        intent.putExtra("ISBN",catBooks.get(position).getISBN());
+                        myContext.startActivity(intent);
+
+                    }
+                });
+
             }
         };
         adapter.startListening();
