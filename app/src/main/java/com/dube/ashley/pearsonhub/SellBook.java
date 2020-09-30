@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -38,12 +40,12 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class SellBook extends AppCompatActivity {
-  TextView name, number, isbn, author, condition, price, textbookname;
+  TextView name, number, isbn, author, condition, price, textbookname, imagesrc;
   Spinner myspinner;
   String userID, titl, is, au, cat, con, pri, nam, num;
   int index;
   Uri imageData;
-  Button list;
+  Button list, save;
   private DrawerLayout mdrawer;
   private ActionBarDrawerToggle mToggle;
   private FirebaseAuth mFirebaseAuth;
@@ -83,6 +85,8 @@ public class SellBook extends AppCompatActivity {
     name = (TextView) findViewById(R.id.sellerName);
     number = (TextView) findViewById(R.id.sellerNumber);
     myspinner = (Spinner) findViewById(R.id.spinner);
+    imagesrc = (TextView) findViewById(R.id.imageSrc);
+    save = (Button) findViewById(R.id.saveBook);
 
     folder = FirebaseStorage.getInstance().getReference().child("Books");
 
@@ -185,78 +189,85 @@ public class SellBook extends AppCompatActivity {
       if (resultCode == RESULT_OK) {
         imageData = data.getData();
 
-        list.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
+        if (!imageData.equals(null)) {
+          save.setBackgroundResource(R.drawable.rounded_image_fill);
+          imagesrc.setText(imageData + "");
 
-                titl = textbookname.getText().toString();
-                is = isbn.getText().toString();
-                au = author.getText().toString();
-                index = myspinner.getSelectedItemPosition();
-                cat = arraySpinner[index];
-                con = condition.getText().toString();
-                pri = price.getText().toString();
-                nam = name.getText().toString();
-                num = number.getText().toString();
+          list.setOnClickListener(
+              new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                final StorageReference imagename =
-                    folder.child(titl + imageData.getLastPathSegment());
+                  titl = textbookname.getText().toString();
+                  is = isbn.getText().toString();
+                  au = author.getText().toString();
+                  index = myspinner.getSelectedItemPosition();
+                  cat = arraySpinner[index];
+                  con = condition.getText().toString();
+                  pri = price.getText().toString();
+                  nam = name.getText().toString();
+                  num = number.getText().toString();
 
-                if (validation(is, au, con, pri, titl) == true) {
-                  String uuid = UUID.randomUUID().toString();
-                  final String uniqueID=uuid.replace("-", "");
-                  imagename
-                      .putFile(imageData)
-                      .addOnSuccessListener(
-                          new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                  final StorageReference imagename =
+                      folder.child(titl + imageData.getLastPathSegment());
 
-                              imagename
-                                  .getDownloadUrl()
-                                  .addOnSuccessListener(
-                                      new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                          DatabaseReference imagestore =
-                                              FirebaseDatabase.getInstance()
-                                                  .getReference()
-                                                  .child("Books")
-                                                  .child(uniqueID);
+                  if (validation(is, au, con, pri, titl) == true) {
+                    String uuid = UUID.randomUUID().toString();
+                    final String uniqueID = uuid.replace("-", "");
+                    imagename
+                        .putFile(imageData)
+                        .addOnSuccessListener(
+                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                              @Override
+                              public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                                          HashMap<String, String> hash = new HashMap<>();
-                                          hash.put("ISBN", is);
-                                          hash.put("author", au);
-                                          hash.put("category", cat);
-                                          hash.put("condition", con);
-                                          hash.put("price", pri);
-                                          hash.put("sellerName", nam);
-                                          hash.put("sellerNumber", num);
-                                          hash.put("thumbnail", String.valueOf(uri));
-                                          hash.put("title", titl);
-                                          imagestore
-                                              .setValue(hash)
-                                              .addOnSuccessListener(
-                                                  new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                      Toast.makeText(
-                                                              SellBook.this,
-                                                              "Uploaded",
-                                                              Toast.LENGTH_SHORT)
-                                                          .show();
-                                                      Intent i = new Intent(SellBook.this, HomeActivity.class);
-                                                      startActivity(i);
-                                                    }
-                                                  });
-                                        }
-                                      });
-                            }
-                          });
+                                imagename
+                                    .getDownloadUrl()
+                                    .addOnSuccessListener(
+                                        new OnSuccessListener<Uri>() {
+                                          @Override
+                                          public void onSuccess(Uri uri) {
+                                            DatabaseReference imagestore =
+                                                FirebaseDatabase.getInstance()
+                                                    .getReference()
+                                                    .child("Books")
+                                                    .child(uniqueID);
+
+                                            HashMap<String, String> hash = new HashMap<>();
+                                            hash.put("ISBN", is);
+                                            hash.put("author", au);
+                                            hash.put("category", cat);
+                                            hash.put("condition", con);
+                                            hash.put("price", pri);
+                                            hash.put("sellerName", nam);
+                                            hash.put("sellerNumber", num);
+                                            hash.put("thumbnail", String.valueOf(uri));
+                                            hash.put("title", titl);
+                                            imagestore
+                                                .setValue(hash)
+                                                .addOnSuccessListener(
+                                                    new OnSuccessListener<Void>() {
+                                                      @Override
+                                                      public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(
+                                                                SellBook.this,
+                                                                "Uploaded",
+                                                                Toast.LENGTH_SHORT)
+                                                            .show();
+                                                        Intent i =
+                                                            new Intent(
+                                                                SellBook.this, HomeActivity.class);
+                                                        startActivity(i);
+                                                      }
+                                                    });
+                                          }
+                                        });
+                              }
+                            });
+                  }
                 }
-              }
-            });
+              });
+        }
       }
     }
   }

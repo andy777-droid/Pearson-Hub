@@ -84,10 +84,10 @@
                         android:layout_height="45dp"
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/rounded_edits"
-                        android:spinnerMode="dropdown"
-                        android:paddingLeft="10dp"
+                        android:dropDownSelector="@drawable/cart"
 
-                        />
+                        android:paddingLeft="10dp"
+                        android:spinnerMode="dropdown" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -135,8 +135,8 @@
                         android:layout_height="45dp"
                         android:layout_marginBottom="20dp"
                         android:autofillHints=""
-                        android:enabled="false"
                         android:background="@drawable/rounded_edits"
+                        android:enabled="false"
                         android:inputType="text"
                         android:paddingLeft="15dp"
                         android:textSize="16sp" />
@@ -151,9 +151,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginBottom="20dp"
-                        android:enabled="false"
                         android:autofillHints=""
                         android:background="@drawable/rounded_edits"
+                        android:enabled="false"
                         android:inputType="text"
                         android:paddingLeft="15dp"
                         android:textSize="16sp" />
@@ -168,7 +168,7 @@
                         android:id="@+id/textbookName"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:autofillHints=""
                         android:background="@drawable/rounded_edits"
                         android:hint="Textbook Title "
@@ -177,9 +177,8 @@
                         android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-
                 <GridLayout
-                    android:id="@+id/GridLayout1"
+                    android:id="@+id/GridLayoutImg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/selectCategory"
@@ -190,45 +189,61 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_columnWeight="1"
-                        android:padding="20px">
+                        android:layout_height="65dp"
+                        android:layout_columnWeight="2"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
-                        <Button
-                            android:id="@+id/saveBook"
+                        <EditText
+                            android:id="@+id/imageSrc"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="15dp"
-                            android:background="@drawable/rounded_button"
-                            android:drawableRight="@drawable/image"
-                            android:paddingRight="20dp"
-                            android:text="Image"
-                            android:onClick="Upload"
-                            android:textColor="#FFFFFF"
-                            android:textSize="18dp"
-                            tools:ignore="HardcoreText" />
+                            android:layout_height="match_parent"
+                            android:background="@drawable/rounded_edits"
+                            android:enabled="false"
+                            android:hint="Image not selected"
+                            android:paddingLeft="15dp"
+                            android:textSize="16sp"></EditText>
+
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="65dp"
                         android:layout_columnWeight="1"
-                        android:padding="20px">
+                        android:padding="10dp">
 
                         <Button
-                            android:id="@+id/listSale"
+                            android:id="@+id/saveBook"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="15dp"
-                            android:background="@drawable/rounded_button"
-                            android:drawableRight="@drawable/list_white"
-                            android:paddingRight="20dp"
-                            android:text="List"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/rounder_image_null"
+                            android:drawableRight="@drawable/image"
+                            android:gravity="center"
+                            android:onClick="Upload"
+                            android:paddingRight="35dp"
                             android:textColor="#FFFFFF"
-                            android:textSize="18dp"
                             tools:ignore="HardcoreText" />
                     </LinearLayout>
+
+
                 </GridLayout>
+
+
+                <Button
+                    android:id="@+id/listSale"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/rounded_button"
+                    android:drawableRight="@drawable/list_white"
+                    android:text="List"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18dp"
+                    tools:ignore="HardcoreText"
+                    />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
