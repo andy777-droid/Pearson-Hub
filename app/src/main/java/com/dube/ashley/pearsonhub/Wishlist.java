@@ -190,6 +190,16 @@ public class Wishlist extends AppCompatActivity {
                     }
                 });
 
+                holder.removeButton2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Wishlist").child(catBooks.get(position).getBookID());
+                        ref.removeValue();
+
+                        Toast.makeText(Wishlist.this,"Wishlist Item Has Been Deleted", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         };
         adapter.startListening();

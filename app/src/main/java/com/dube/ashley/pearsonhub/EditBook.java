@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -40,10 +41,10 @@ public class EditBook extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
     private DatabaseReference databaseReference;
     private FirebaseUser user;
-    EditText textbookName, bookPrice, bookIsbn, bookAuthor,bookCondition;
-    String newtextbookName, newbookPrice, newbookIsbn, newbookAuthor,newbookCondition,newsellersNumber;
+    EditText textbookName, bookPrice, bookIsbn, bookAuthor, bookCondition;
+    String newtextbookName, newbookPrice, newbookIsbn, newbookAuthor, newbookCondition, newsellersNumber;
     Button saveBtn;
-    String title,price,sellNum,author,condition,isbn,bookID;
+    String title, price, sellNum, author, condition, isbn, bookID;
     DatabaseReference ref;
     FirebaseUser userID;
     AwesomeValidation validationA;
@@ -57,23 +58,21 @@ public class EditBook extends AppCompatActivity {
 
         userID = FirebaseAuth.getInstance().getCurrentUser();
 
-        textbookName= (EditText) findViewById(R.id.textbookName);
-        bookPrice=(EditText) findViewById(R.id.price);
-        bookIsbn=(EditText) findViewById(R.id.isbn);
-        bookAuthor=(EditText) findViewById(R.id.author);
-        bookCondition=(EditText) findViewById(R.id.condition);
+        textbookName = (EditText) findViewById(R.id.textbookName);
+        bookPrice = (EditText) findViewById(R.id.price);
+        bookIsbn = (EditText) findViewById(R.id.isbn);
+        bookAuthor = (EditText) findViewById(R.id.author);
+        bookCondition = (EditText) findViewById(R.id.condition);
 
 
-        Intent intent=getIntent();
-        title =intent.getExtras().getString("Title");
-        price=intent.getExtras().getString("Price");
-        sellNum =intent.getExtras().getString("SellerNumber");
-        author=intent.getExtras().getString("Author");
-        condition=intent.getExtras().getString("Condition");
-        isbn=intent.getExtras().getString("ISBN");
-        bookID=intent.getExtras().getString("bookID");
-
-
+        Intent intent = getIntent();
+        title = intent.getExtras().getString("Title");
+        price = intent.getExtras().getString("Price");
+        sellNum = intent.getExtras().getString("SellerNumber");
+        author = intent.getExtras().getString("Author");
+        condition = intent.getExtras().getString("Condition");
+        isbn = intent.getExtras().getString("ISBN");
+        bookID = intent.getExtras().getString("bookID");
 
 
         textbookName.setText(title);
@@ -83,34 +82,25 @@ public class EditBook extends AppCompatActivity {
         bookIsbn.setText(isbn);
 
 
-
-
-        mFirebaseAuth=FirebaseAuth.getInstance();
+        mFirebaseAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference= FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
-        databaseReference.addValueEventListener(new ValueEventListener()
-
-        {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot)
-            {
-                User curUsers =snapshot.getValue(User.class);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User curUsers = snapshot.getValue(User.class);
                 assert curUsers != null;
                 NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
                 View header = navigationView.getHeaderView(0);
                 TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
-                tv.setText( curUsers.getFirstname()+" "+curUsers.getLastname());
+                tv.setText(curUsers.getFirstname() + " " + curUsers.getLastname());
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error)
-            {
-                Toast.makeText(EditBook.this,error.getMessage(),Toast.LENGTH_LONG).show();
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(EditBook.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
-
-
 
 
         mdrawer = (DrawerLayout) findViewById(R.id.edit_drawer_layout);
@@ -130,7 +120,7 @@ public class EditBook extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.menu_home:
                         Intent home = new Intent(EditBook.this, HomeActivity.class);
                         startActivity(home);
@@ -186,47 +176,39 @@ public class EditBook extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void update(View view)
-    {
+    public void update(View view) {
         ref = FirebaseDatabase.getInstance().getReference("Books");
 
 
-        textbookName= (EditText) findViewById(R.id.textbookName);
-        bookPrice=(EditText) findViewById(R.id.price);
-        bookIsbn=(EditText) findViewById(R.id.isbn);
-        bookAuthor=(EditText) findViewById(R.id.author);
-        bookCondition=(EditText) findViewById(R.id.condition);
+        textbookName = (EditText) findViewById(R.id.textbookName);
+        bookPrice = (EditText) findViewById(R.id.price);
+        bookIsbn = (EditText) findViewById(R.id.isbn);
+        bookAuthor = (EditText) findViewById(R.id.author);
+        bookCondition = (EditText) findViewById(R.id.condition);
 
 
         validationA.addValidation(this, R.id.textbookName, RegexTemplate.NOT_EMPTY, R.string.invalid_name); //Name validation
         validationA.addValidation(this, R.id.price, RegexTemplate.NOT_EMPTY, R.string.numbersOnly);
-        validationA.addValidation(this, R.id.isbn,  "^[0-9]{13}$"    , R.string.invalid_ISBN);
-        validationA.addValidation(this,R.id.author, RegexTemplate.NOT_EMPTY, R.string.auth);
-        validationA.addValidation(this,R.id.condition, "[1-9]|10", R.string.condition);
+        validationA.addValidation(this, R.id.isbn, "^[0-9]{13}$", R.string.invalid_ISBN);
+        validationA.addValidation(this, R.id.author, RegexTemplate.NOT_EMPTY, R.string.auth);
+        validationA.addValidation(this, R.id.condition, "[1-9]|10", R.string.condition);
 
-        if (validationA.validate())
-        {
+        if (validationA.validate()) {
             ref.child(bookID).child("title").setValue(textbookName.getText().toString());
             ref.child(bookID).child("author").setValue(bookAuthor.getText().toString());
             ref.child(bookID).child("ISBN").setValue(bookIsbn.getText().toString());
             ref.child(bookID).child("condition").setValue(bookCondition.getText().toString());
             ref.child(bookID).child("price").setValue(bookPrice.getText().toString());
 
-            Toast.makeText(EditBook.this,"Your update was successful",Toast.LENGTH_LONG).show();
+            Toast.makeText(EditBook.this, "Your update was successful", Toast.LENGTH_LONG).show();
             Intent i = new Intent(EditBook.this, Listings.class);
             startActivity(i);
+        } else {
+            Toast.makeText(EditBook.this, "Validation Failed", Toast.LENGTH_LONG).show();
         }
-        else
-        {
-            Toast.makeText(EditBook.this,"Validation Failed",Toast.LENGTH_LONG).show();
-        }
-
 
 
     }
 
-
-
-
-
 }
+

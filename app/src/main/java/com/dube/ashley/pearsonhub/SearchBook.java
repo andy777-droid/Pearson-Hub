@@ -181,6 +181,7 @@ public class SearchBook extends AppCompatActivity
                         String thumbnail = ds.child("thumbnail").getValue(String.class);
                         String bookID = ds.child("bookID").getValue(String.class);
 
+
                         catBooks.add(new CategoryHandler(bookNameProper,price,category,author,condition,ISBN,sellerNumber,sellerName,thumbnail,bookID));
 
                         RecyclerView rv=(RecyclerView) findViewById(R.id.recyclerviewSearch_id);

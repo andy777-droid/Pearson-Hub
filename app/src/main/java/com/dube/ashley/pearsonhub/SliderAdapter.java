@@ -92,6 +92,7 @@ public class SliderAdapter extends PagerAdapter
                 intent.putExtra("email",theEmail);
                 intent.putExtra("category",catBooks.get(position).getCategory());
                 intent.putExtra("bookID",catBooks.get(position).getBookID());
+
                 context.startActivity(intent);
             }
         });

@@ -90,6 +90,7 @@ public class Book extends AppCompatActivity {
 
 
 
+
         tvTitle.setText(title);
         tvPrice.setText("R " + price);
         tvSellerNumber.setText(sellerNumber);
@@ -207,6 +208,7 @@ public class Book extends AppCompatActivity {
                                 hash.put("sellerNumber", sellerNumber);
                                 hash.put("thumbnail", image);
                                 hash.put("title", title);
+                                hash.put("uniqueID", uniqueID);
 
                                 imagestore.setValue(hash).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

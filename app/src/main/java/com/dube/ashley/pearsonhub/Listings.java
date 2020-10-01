@@ -54,6 +54,7 @@ public class Listings extends AppCompatActivity {
     FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder> adapter;
     RecyclerView rv;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -191,8 +192,19 @@ public class Listings extends AppCompatActivity {
                         intent.putExtra("ISBN",catBooks.get(position).getISBN());
                         intent.putExtra("email",theEmail);
                         intent.putExtra("category",catBooks.get(position).getCategory());
+                        intent.putExtra("bookID",catBooks.get(position).getBookID());
                         myContext.startActivity(intent);
 
+                    }
+                });
+
+                holder.removeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Books").child(catBooks.get(position).getBookID());
+                        ref.removeValue();
+
+                        Toast.makeText(Listings.this,"Book Has Been Deleted", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -246,4 +258,6 @@ public class Listings extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

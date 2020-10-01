@@ -67,6 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter <RecyclerViewAdapt
                 intent.putExtra("email",theEmail);
                 intent.putExtra("category",mData.get(position).getCategory());
                 intent.putExtra("bookID",mData.get(position).getBookID());
+
                 mContext.startActivity(intent);
 
             }
