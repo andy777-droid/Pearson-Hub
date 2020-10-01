@@ -208,7 +208,7 @@ public class Book extends AppCompatActivity {
                                 hash.put("sellerNumber", sellerNumber);
                                 hash.put("thumbnail", image);
                                 hash.put("title", title);
-                                hash.put("uniqueID", uniqueID);
+                                hash.put("bookID", uniqueID);
 
                                 imagestore.setValue(hash).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

@@ -1,5 +1,6 @@
 package com.dube.ashley.pearsonhub;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.net.Uri;
@@ -193,10 +195,29 @@ public class Wishlist extends AppCompatActivity {
                 holder.removeButton2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Wishlist").child(catBooks.get(position).getBookID());
-                        ref.removeValue();
 
-                        Toast.makeText(Wishlist.this,"Wishlist Item Has Been Deleted", Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder popper = new AlertDialog.Builder(Wishlist.this);
+                        popper.setMessage("Do you want to remove this wishlist item?").setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Wishlist").child(catBooks.get(position).getBookID());
+                                ref.removeValue();
+
+                                Toast.makeText(Wishlist.this,"Wishlist Item Has Been Deleted", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        AlertDialog alert = popper.create();
+                        alert.setTitle("Remove Wishlist Item");
+                        alert.show();
+
+
                     }
                 });
 
