@@ -8,6 +8,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -73,11 +75,17 @@ public class SellBook extends AppCompatActivity {
         "English Language"
       };
 
-
-  @Override
+  //progressBar
+  private ProgressDialog mProgress;  @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_sell_book);
+
+    mProgress = new ProgressDialog(this);
+    mProgress.setTitle("Uploading Your Book...");
+    mProgress.setMessage("Please wait...");
+    mProgress.setCancelable(false);
+    mProgress.setIndeterminate(true);
 
     list = (Button) findViewById(R.id.listSale);
     isbn = (TextView) findViewById(R.id.isbn);
@@ -244,6 +252,7 @@ public class SellBook extends AppCompatActivity {
               new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                  mProgress.show();
 
                   titl = textbookname.getText().toString();
                   is = isbn.getText().toString();
@@ -297,6 +306,7 @@ public class SellBook extends AppCompatActivity {
                                                     new OnSuccessListener<Void>() {
                                                       @Override
                                                       public void onSuccess(Void aVoid) {
+                                                        mProgress.dismiss();
                                                         Toast.makeText(
                                                                 SellBook.this,
                                                                 "Uploaded",

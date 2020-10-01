@@ -62,8 +62,6 @@ public class Listings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listings);
 
-
-
         mFirebaseAuth=FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
         rv=(RecyclerView) findViewById(R.id.recyclerviewListings_id);
@@ -212,6 +210,9 @@ public class Listings extends AppCompatActivity {
                                 ref.removeValue();
 
                                 Toast.makeText(Listings.this,"Book Has Been Deleted", Toast.LENGTH_SHORT).show();
+                                Intent intentHome =
+                                        new Intent(Listings.this, Listings.class);
+                                startActivity(intentHome);
                                 finish();
                             }
                         }).setNegativeButton("No", new DialogInterface.OnClickListener() {

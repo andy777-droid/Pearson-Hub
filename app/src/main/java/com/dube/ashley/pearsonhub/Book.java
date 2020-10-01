@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -59,11 +60,19 @@ public class Book extends AppCompatActivity {
     FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder> adapter;
 
     String userID, titl, is, au, cat, con, pri, nam, num, email;
+    //progressBar
+    private ProgressDialog mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
+
+        mProgress = new ProgressDialog(this);
+        mProgress.setTitle("Adding to Wishlist...");
+        mProgress.setMessage("Please wait...");
+        mProgress.setCancelable(false);
+        mProgress.setIndeterminate(true);
 
         wishBtn = (Button) findViewById(R.id.wishlistButton);
         tvTitle = (TextView) findViewById(R.id.textView);
@@ -183,7 +192,7 @@ public class Book extends AppCompatActivity {
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
+                                mProgress.show();
                                 String uuid = UUID.randomUUID().toString();
                                 final String uniqueID = uuid.replace("-", "");
 
@@ -193,9 +202,6 @@ public class Book extends AppCompatActivity {
                                                 .getReference()
                                                 .child("Wishlist")
                                                 .child(uniqueID);
-
-
-
 
                                 HashMap<String, String> hash = new HashMap<>();
                                 hash.put("ISBN", isbn);
@@ -213,6 +219,8 @@ public class Book extends AppCompatActivity {
                                 imagestore.setValue(hash).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
+
+                                        mProgress.dismiss();
 
                                         Toast.makeText(
                                                 Book.this,

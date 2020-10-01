@@ -204,7 +204,12 @@ public class Wishlist extends AppCompatActivity {
                                 ref.removeValue();
 
                                 Toast.makeText(Wishlist.this,"Wishlist Item Has Been Deleted", Toast.LENGTH_SHORT).show();
+
+                                Intent intentHome =
+                                        new Intent(Wishlist.this, Wishlist.class);
+                                startActivity(intentHome);
                                 finish();
+
                             }
                         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
@@ -216,8 +221,6 @@ public class Wishlist extends AppCompatActivity {
                         AlertDialog alert = popper.create();
                         alert.setTitle("Remove Wishlist Item");
                         alert.show();
-
-
                     }
                 });
 

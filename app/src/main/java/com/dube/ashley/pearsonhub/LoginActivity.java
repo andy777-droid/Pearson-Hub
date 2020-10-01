@@ -3,6 +3,7 @@ package com.dube.ashley.pearsonhub;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -27,11 +28,19 @@ public class LoginActivity extends AppCompatActivity {
   FirebaseAuth mFirebaseAuth;
   private FirebaseAuth.AuthStateListener mAuthStateListener;
 
+  //progressBar
+  private ProgressDialog mProgress;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
+      mProgress = new ProgressDialog(this);
+      mProgress.setTitle("Logging In...");
+      mProgress.setMessage("Verifying User...");
+      mProgress.setCancelable(false);
+      mProgress.setIndeterminate(true);
     mFirebaseAuth = FirebaseAuth.getInstance();
     emailId = findViewById(R.id.editTextTextEmailAddress);
     passwordTXT = findViewById(R.id.editTextTextPassword);
@@ -65,16 +74,20 @@ public class LoginActivity extends AppCompatActivity {
         new View.OnClickListener() {
           @Override
           public void onClick(View v) {
+              mProgress.show();
             String email = emailId.getText().toString();
             String passwrd = passwordTXT.getText().toString();
 
             if (email.isEmpty()) {
+                mProgress.dismiss();
               emailId.setError("Please enter your email address");
               emailId.requestFocus();
             } else if (passwrd.isEmpty()) {
+                mProgress.dismiss();
               passwordTXT.setError("Please enter your password");
               passwordTXT.requestFocus();
             } else if (email.isEmpty() && passwrd.isEmpty()) {
+                mProgress.dismiss();
               Toast.makeText(LoginActivity.this, "Fields are empty", Toast.LENGTH_SHORT).show();
             } else if (!(email.isEmpty() && passwrd.isEmpty())) {
               mFirebaseAuth
@@ -85,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                           if (!task.isSuccessful()) {
+                              mProgress.dismiss();
                             Toast.makeText(
                                     LoginActivity.this,
                                     "Login Error, please attempt Login again",
@@ -92,12 +106,15 @@ public class LoginActivity extends AppCompatActivity {
                                 .show();
                           } else {
                             if (mFirebaseAuth.getCurrentUser().isEmailVerified()) {
-                              Intent intentHome =
+                                mProgress.dismiss();
+                                Intent intentHome =
                                   new Intent(LoginActivity.this, HomeActivity.class);
                               startActivity(intentHome);
                               finish();
                             } else {
-                              Toast.makeText(
+                                mProgress.dismiss();
+                                Toast.makeText(
+
                                       LoginActivity.this,
                                       "Please verify your email address",
                                       Toast.LENGTH_LONG)
@@ -107,6 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                       });
             } else {
+                mProgress.dismiss();
               Toast.makeText(LoginActivity.this, "Error Occured", Toast.LENGTH_SHORT).show();
             }
           }

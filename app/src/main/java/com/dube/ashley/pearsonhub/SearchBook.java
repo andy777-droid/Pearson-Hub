@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -40,9 +41,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
+
 
 public class SearchBook extends AppCompatActivity
 {
@@ -56,12 +58,21 @@ public class SearchBook extends AppCompatActivity
     private DatabaseReference databaseReference,databaseReference2;
     private FirebaseUser user;
     User curUsers;
+    //progressBar
+    private ProgressDialog mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_book);
+
+        mProgress = new ProgressDialog(this);
+        mProgress.setTitle("Searching for Books...");
+        mProgress.setMessage("Please Wait...");
+        mProgress.setCancelable(false);
+        mProgress.setIndeterminate(true);
+
         searchBTN = findViewById(R.id.searchBTN);
         searchBookET = findViewById(R.id.searchBookET);
 
@@ -141,9 +152,11 @@ public class SearchBook extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                mProgress.show();
 
                 if (TextUtils.isEmpty(searchBookET.getText().toString().trim()))
                 {
+                    mProgress.dismiss();
                     searchBookET.setError("Enter a book Name");
                 }
                 else
@@ -163,6 +176,7 @@ public class SearchBook extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Boolean found;
+                int x=0;
                 for(DataSnapshot ds : dataSnapshot.getChildren())
                 {
                     search.toLowerCase();
@@ -187,9 +201,29 @@ public class SearchBook extends AppCompatActivity
                         RecyclerView rv=(RecyclerView) findViewById(R.id.recyclerviewSearch_id);
                         RecyclerViewAdapter rva=new RecyclerViewAdapter(SearchBook.this,catBooks, theEmail);
                         rv.setLayoutManager(new GridLayoutManager(SearchBook.this,2));
+                        mProgress.dismiss();
                         rv.setNestedScrollingEnabled(false);
                         rv.setAdapter(rva);
+                        x++;
                     }
+                }
+                if(x==0)
+                {
+                    mProgress.dismiss();
+                    Toast.makeText(
+                            SearchBook.this,
+                            "No Books Found",
+                            Toast.LENGTH_LONG)
+                            .show();
+                }
+                else
+                {
+                    mProgress.dismiss();
+                    Toast.makeText(
+                            SearchBook.this,x+
+                            " Books Found",
+                            Toast.LENGTH_LONG)
+                            .show();
                 }
             }
 

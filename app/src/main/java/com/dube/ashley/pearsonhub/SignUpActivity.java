@@ -3,6 +3,7 @@ package com.dube.ashley.pearsonhub;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -43,11 +44,19 @@ public class SignUpActivity extends AppCompatActivity {
   User user;
   TextView login;
   private DatabaseReference databaseReference;
+  //progressBar
+  private ProgressDialog mProgress;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_sign_up);
+
+    mProgress = new ProgressDialog(this);
+    mProgress.setTitle("Registering User...");
+    mProgress.setMessage("Please Wait...");
+    mProgress.setCancelable(false);
+    mProgress.setIndeterminate(true);
 
     mAuth = FirebaseAuth.getInstance();
     etfirstName = (EditText) findViewById(R.id.firstName);
@@ -82,10 +91,13 @@ public class SignUpActivity extends AppCompatActivity {
         });
   }
 
-  public void registerNewUser() {
+  public void registerNewUser()
+  {
+    mProgress.show();
     initialize(); // initialize the input to string variables
 
     if (!validate()) {
+      mProgress.dismiss();
       Toast.makeText(this, "Signup has failed", Toast.LENGTH_LONG).show();
     } else {
       onSignupSuccess();
@@ -127,6 +139,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                           if (task.isSuccessful()) {
+                                            mProgress.dismiss();
                                             Toast.makeText(
                                                     SignUpActivity.this,
                                                     "Registration Successful, please click the link that has been emailed to you",
@@ -134,6 +147,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                 .show();
                                             setContentView(R.layout.activity_login);
                                           } else {
+                                            mProgress.dismiss();
                                             Toast.makeText(
                                                     SignUpActivity.this,
                                                     task.getException().getMessage(),
@@ -146,6 +160,7 @@ public class SignUpActivity extends AppCompatActivity {
                           });
 
                 } else {
+                  mProgress.dismiss();
                   Toast.makeText(
                           SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG)
                       .show();
