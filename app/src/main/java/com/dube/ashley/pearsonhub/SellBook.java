@@ -290,6 +290,7 @@ public class SellBook extends AppCompatActivity {
                                             hash.put("sellerNumber", num);
                                             hash.put("thumbnail", String.valueOf(uri));
                                             hash.put("title", titl);
+                                            hash.put("bookID", uniqueID);
                                             imagestore
                                                 .setValue(hash)
                                                 .addOnSuccessListener(

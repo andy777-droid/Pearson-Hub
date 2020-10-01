@@ -18,18 +18,7 @@
             android:orientation="vertical"
             android:padding="5dp">
 
-            <TextView
-                android:id="@+id/listingsName"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="25dp"
-                android:gravity="center_horizontal"
-                android:text="Your Wishlist"
-                android:textColor="#000000"
-                android:textSize="24dp"
-                android:textStyle="bold" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerviewWishlist_id"

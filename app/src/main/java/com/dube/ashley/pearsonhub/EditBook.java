@@ -213,6 +213,8 @@ public class EditBook extends AppCompatActivity {
             ref.child(bookID).child("price").setValue(bookPrice.getText().toString());
 
             Toast.makeText(EditBook.this,"Your update was successful",Toast.LENGTH_LONG).show();
+            Intent i = new Intent(EditBook.this, Listings.class);
+            startActivity(i);
         }
         else
         {

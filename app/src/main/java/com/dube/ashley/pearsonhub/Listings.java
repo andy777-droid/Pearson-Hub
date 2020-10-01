@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -97,7 +98,7 @@ public class Listings extends AppCompatActivity {
         mToggle.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("");
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#008aa3'> Your Listings </font>"));
         getSupportActionBar().setElevation(0);
 
         mToggle.setDrawerArrowDrawable(new HamburgerDrawable(this));
