@@ -43,7 +43,7 @@ public class EditBook extends AppCompatActivity {
     EditText textbookName, bookPrice, bookIsbn, bookAuthor,bookCondition;
     String newtextbookName, newbookPrice, newbookIsbn, newbookAuthor,newbookCondition,newsellersNumber;
     Button saveBtn;
-    String title,price,sellNum,author,condition,isbn;
+    String title,price,sellNum,author,condition,isbn,bookID;
     DatabaseReference ref;
     FirebaseUser userID;
     AwesomeValidation validationA;
@@ -57,8 +57,6 @@ public class EditBook extends AppCompatActivity {
 
         userID = FirebaseAuth.getInstance().getCurrentUser();
 
-        ref = FirebaseDatabase.getInstance().getReference("Books");
-
         textbookName= (EditText) findViewById(R.id.textbookName);
         bookPrice=(EditText) findViewById(R.id.price);
         bookIsbn=(EditText) findViewById(R.id.isbn);
@@ -67,12 +65,13 @@ public class EditBook extends AppCompatActivity {
 
 
         Intent intent=getIntent();
-         title =intent.getExtras().getString("Title");
-         price=intent.getExtras().getString("Price");
-         sellNum =intent.getExtras().getString("SellerNumber");
-         author=intent.getExtras().getString("Author");
-         condition=intent.getExtras().getString("Condition");
-         isbn=intent.getExtras().getString("ISBN");
+        title =intent.getExtras().getString("Title");
+        price=intent.getExtras().getString("Price");
+        sellNum =intent.getExtras().getString("SellerNumber");
+        author=intent.getExtras().getString("Author");
+        condition=intent.getExtras().getString("Condition");
+        isbn=intent.getExtras().getString("ISBN");
+        bookID=intent.getExtras().getString("bookID");
 
 
 
@@ -187,8 +186,10 @@ public class EditBook extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-        public void update(View view)
+    public void update(View view)
     {
+        ref = FirebaseDatabase.getInstance().getReference("Books");
+
 
         textbookName= (EditText) findViewById(R.id.textbookName);
         bookPrice=(EditText) findViewById(R.id.price);
@@ -205,11 +206,11 @@ public class EditBook extends AppCompatActivity {
 
         if (validationA.validate())
         {
-            ref.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("title").setValue(textbookName.getText().toString());
-            ref.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("author").setValue(bookAuthor.getText().toString());
-            ref.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("ISBN").setValue(bookIsbn.getText().toString());
-            ref.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("condition").setValue(bookCondition.getText().toString());
-            ref.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("price").setValue(bookPrice.getText().toString());
+            ref.child(bookID).child("title").setValue(textbookName.getText().toString());
+            ref.child(bookID).child("author").setValue(bookAuthor.getText().toString());
+            ref.child(bookID).child("ISBN").setValue(bookIsbn.getText().toString());
+            ref.child(bookID).child("condition").setValue(bookCondition.getText().toString());
+            ref.child(bookID).child("price").setValue(bookPrice.getText().toString());
 
             Toast.makeText(EditBook.this,"Your update was successful",Toast.LENGTH_LONG).show();
         }

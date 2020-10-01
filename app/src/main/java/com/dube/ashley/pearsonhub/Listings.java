@@ -161,10 +161,6 @@ public class Listings extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull MyViewHolder holder, final int position, @NonNull CategoryHandler model)
             {
 
-
-
-
-
                 holder.listingsTitle.setText(model.getTitle());
                 holder.listingsPrice.setText("R "+model.getPrice());
                 Picasso.Builder builder = new Picasso.Builder(myContext);
@@ -178,7 +174,7 @@ public class Listings extends AppCompatActivity {
                 });
                 builder.build().load(model.getThumbnail()).into(holder.listingsImageView);
 
-                catBooks.add(new CategoryHandler(model.getTitle(),model.getPrice(),model.getCategory(),model.getAuthor(),model.getCondition(),model.getISBN(),model.getSellerNumber(),model.getSellerName(),model.getThumbnail()));
+                catBooks.add(new CategoryHandler(model.getTitle(),model.getPrice(),model.getCategory(),model.getAuthor(),model.getCondition(),model.getISBN(),model.getSellerNumber(),model.getSellerName(),model.getThumbnail(),model.getBookID()));
                 holder.listingsImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
@@ -212,6 +208,8 @@ public class Listings extends AppCompatActivity {
                         intent.putExtra("Author",catBooks.get(position).getAuthor());
                         intent.putExtra("Condition",catBooks.get(position).getCondition());
                         intent.putExtra("ISBN",catBooks.get(position).getISBN());
+                        intent.putExtra("bookID",catBooks.get(position).getBookID());
+
                         myContext.startActivity(intent);
 
                     }

@@ -11,13 +11,14 @@ public class CategoryHandler
     private String condition;
     private String ISBN;
     private String thumbnail;
+    String bookID;
 
     public CategoryHandler()
     {
 
     }
 
-    public CategoryHandler (String title,String price, String category, String author, String condition, String ISBN, String sellerNumber,String sellerName, String thumbnail)
+    public CategoryHandler (String title,String price, String category, String author, String condition, String ISBN, String sellerNumber,String sellerName, String thumbnail,String bookID)
     {
         this.title = title;
         this.category = category;
@@ -28,6 +29,8 @@ public class CategoryHandler
         this.author = author;
         this.condition = condition;
         this.ISBN = ISBN;
+        this.bookID = bookID;
+
     }
 
     public String getTitle() {
@@ -102,5 +105,13 @@ public class CategoryHandler
 
     public void setISBN(String ISBN) {
         this.ISBN = ISBN;
+    }
+
+    public String getBookID() {
+        return bookID;
+    }
+
+    public void setBookID(String bookID) {
+        this.bookID = bookID;
     }
 }

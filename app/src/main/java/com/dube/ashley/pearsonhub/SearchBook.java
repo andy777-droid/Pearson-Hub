@@ -179,8 +179,9 @@ public class SearchBook extends AppCompatActivity
                         String condition = ds.child("condition").getValue(String.class);
                         String ISBN = ds.child("ISBN").getValue(String.class);
                         String thumbnail = ds.child("thumbnail").getValue(String.class);
+                        String bookID = ds.child("bookID").getValue(String.class);
 
-                        catBooks.add(new CategoryHandler(bookNameProper,price,category,author,condition,ISBN,sellerNumber,sellerName,thumbnail));
+                        catBooks.add(new CategoryHandler(bookNameProper,price,category,author,condition,ISBN,sellerNumber,sellerName,thumbnail,bookID));
 
                         RecyclerView rv=(RecyclerView) findViewById(R.id.recyclerviewSearch_id);
                         RecyclerViewAdapter rva=new RecyclerViewAdapter(SearchBook.this,catBooks, theEmail);

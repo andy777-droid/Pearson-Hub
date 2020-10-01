@@ -191,7 +191,7 @@ public class Categories extends AppCompatActivity
                 });
                 builder.build().load(model.getThumbnail()).into(holder.thumbnail);
 
-                catBooks.add(new CategoryHandler(model.getTitle(),model.getPrice(),model.getCategory(),model.getAuthor(),model.getCondition(),model.getISBN(),model.getSellerNumber(),model.getSellerName(),model.getThumbnail()));
+                catBooks.add(new CategoryHandler(model.getTitle(),model.getPrice(),model.getCategory(),model.getAuthor(),model.getCondition(),model.getISBN(),model.getSellerNumber(),model.getSellerName(),model.getThumbnail(),model.getBookID()));
                 //click listener
                 holder.cardView.setOnClickListener(new View.OnClickListener() {
                     @Override

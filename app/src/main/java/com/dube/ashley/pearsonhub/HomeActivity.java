@@ -138,8 +138,9 @@ public class HomeActivity extends AppCompatActivity {
                     String condition = ds.child("condition").getValue(String.class);
                     String ISBN = ds.child("ISBN").getValue(String.class);
                     String thumbnail = ds.child("thumbnail").getValue(String.class);
+                    String bookID = ds.child("bookID").getValue(String.class);
 
-                    catBooks.add(new CategoryHandler(title,price,category,author,condition,ISBN,sellerNumber,sellerName,thumbnail));
+                    catBooks.add(new CategoryHandler(title,price,category,author,condition,ISBN,sellerNumber,sellerName,thumbnail,bookID));
                 }
 
                 viewPager.setAdapter(sliderAdapter);

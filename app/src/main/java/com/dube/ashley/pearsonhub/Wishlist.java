@@ -170,7 +170,7 @@ public class Wishlist extends AppCompatActivity {
                 });
                 builder.build().load(model.getThumbnail()).into(holder.WishlistImageView);
 
-                catBooks.add(new CategoryHandler(model.getTitle(),model.getPrice(),model.getCategory(),model.getAuthor(),model.getCondition(),model.getISBN(),model.getSellerNumber(),model.getSellerName(),model.getThumbnail()));
+                catBooks.add(new CategoryHandler(model.getTitle(),model.getPrice(),model.getCategory(),model.getAuthor(),model.getCondition(),model.getISBN(),model.getSellerNumber(),model.getSellerName(),model.getThumbnail(),model.getBookID()));
                 holder.WishlistImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
