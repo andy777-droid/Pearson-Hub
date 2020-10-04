@@ -116,7 +116,7 @@ public class HomeActivity extends AppCompatActivity {
         mToggle.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("");
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#008aa3'> Home </font>"));
         getSupportActionBar().setElevation(0);
         viewPager = (ViewPager) findViewById(R.id.SlideViewPager);
         mDotsSlider = (LinearLayout) findViewById(R.id.dots);

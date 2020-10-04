@@ -16,6 +16,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
@@ -137,7 +138,7 @@ public class SellBook extends AppCompatActivity {
     mToggle.syncState();
 
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    setTitle("");
+    getSupportActionBar().setTitle(Html.fromHtml("<font color='#008aa3'> Sell </font>"));
     getSupportActionBar().setElevation(0);
 
     mToggle.setDrawerArrowDrawable(new SellBook.HamburgerDrawable(this));

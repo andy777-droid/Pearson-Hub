@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -145,7 +146,7 @@ public class Book extends AppCompatActivity {
         mToggle.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("");
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#008aa3'> Book Details </font>"));
         getSupportActionBar().setElevation(0);
 
         mToggle.setDrawerArrowDrawable(new HamburgerDrawable(this));
@@ -185,9 +186,7 @@ public class Book extends AppCompatActivity {
             }
         });
 
-        wishBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
                 wishBtn.setOnClickListener(
                         new View.OnClickListener() {
                             @Override
@@ -238,9 +237,7 @@ public class Book extends AppCompatActivity {
 
                             }
                         });
-            }
 
-        });
     }
 
 

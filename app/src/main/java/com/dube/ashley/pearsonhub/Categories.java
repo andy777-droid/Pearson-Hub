@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,7 +65,7 @@ public class Categories extends AppCompatActivity
         final String branch=intent.getExtras().getString("branch");
         String categoryName=intent.getExtras().getString("categoryName");
         catName=(TextView) findViewById(R.id.categoryName);
-        catName.setText(categoryName);
+        catName.setText("Results");
 
         mdrawer = (DrawerLayout) findViewById(R.id.category_drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
@@ -73,11 +74,12 @@ public class Categories extends AppCompatActivity
         mToggle.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("");
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#008aa3'> " +categoryName+ " </font>"));
         getSupportActionBar().setElevation(0);
         //Request Books
         rv=(RecyclerView) findViewById(R.id.recyclerview_id);
-
+        rv.setNestedScrollingEnabled(false);
+        rv.setLayoutManager(new GridLayoutManager(this,2));
 
 
         mToggle.setDrawerArrowDrawable(new Categories.HamburgerDrawable(this));
@@ -106,17 +108,6 @@ public class Categories extends AppCompatActivity
             }
         });
 
-
-        mdrawer = (DrawerLayout) findViewById(R.id.category_drawer_layout);
-        mToggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
-
-        mdrawer.addDrawerListener(mToggle);
-        mToggle.syncState();
-        rv.setNestedScrollingEnabled(false);
-        rv.setLayoutManager(new GridLayoutManager(this,2));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("");
-        getSupportActionBar().setElevation(0);
 
         mToggle.setDrawerArrowDrawable(new HamburgerDrawable(this));
 

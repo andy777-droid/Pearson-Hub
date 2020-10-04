@@ -28,7 +28,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="0dp"
-                android:text="Sell A Book"
+                android:text="Book Details"
                 android:textColor="#000000"
                 android:textSize="30sp"
                 android:textStyle="bold" />
