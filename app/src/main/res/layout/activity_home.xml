@@ -277,6 +277,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/navigation_header"
+        android:background="@color/toolbar"
         app:menu="@menu/drawer_menu"
         app:theme="@style/NavigationViewStyle" />
 
