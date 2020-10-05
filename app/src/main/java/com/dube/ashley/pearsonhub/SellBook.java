@@ -12,10 +12,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Html;
 import android.util.Patterns;
 import android.view.MenuItem;
@@ -41,6 +44,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -76,8 +82,10 @@ public class SellBook extends AppCompatActivity {
         "English Language"
       };
 
-  //progressBar
-  private ProgressDialog mProgress;  @Override
+  // progressBar
+  private ProgressDialog mProgress;
+
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_sell_book);
@@ -180,49 +188,48 @@ public class SellBook extends AppCompatActivity {
         });
   }
 
-
- public String getCategoryValue(int value){
+  public String getCategoryValue(int value) {
     String correct = "";
-   switch(value){
-     case 0:
-       correct = "GraphicsDesign";
-       break;
-     case 1:
-       correct = "Psychology";
-       break;
-     case 2:
-       correct = "Tourism";
-       break;
-     case 3:
-       correct = "ComputerScience";
-       break;
-     case 4:
-       correct = "Law";
-       break;
-     case 5:
-       correct = "BA";
-       break;
-     case 6:
-       correct = "Mathematics";
-       break;
-     case 7:
-       correct = "Biology";
-       break;
-     case 8:
-       correct = "PhysicalScience";
-       break;
-     case 9:
-       correct = "Chemistry";
-       break;
-     case 10:
-       correct = "BusinessManagement";
-       break;
-     case 11:
-       correct = "English";
-       break;
-   }
+    switch (value) {
+      case 0:
+        correct = "GraphicsDesign";
+        break;
+      case 1:
+        correct = "Psychology";
+        break;
+      case 2:
+        correct = "Tourism";
+        break;
+      case 3:
+        correct = "ComputerScience";
+        break;
+      case 4:
+        correct = "Law";
+        break;
+      case 5:
+        correct = "BA";
+        break;
+      case 6:
+        correct = "Mathematics";
+        break;
+      case 7:
+        correct = "Biology";
+        break;
+      case 8:
+        correct = "PhysicalScience";
+        break;
+      case 9:
+        correct = "Chemistry";
+        break;
+      case 10:
+        correct = "BusinessManagement";
+        break;
+      case 11:
+        correct = "English";
+        break;
+    }
     return correct;
- }
+  }
 
   @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -271,8 +278,27 @@ public class SellBook extends AppCompatActivity {
                   if (validation(is, au, con, pri, titl) == true) {
                     String uuid = UUID.randomUUID().toString();
                     final String uniqueID = uuid.replace("-", "");
+                    Bitmap bmp = null;
+
+
+                    try {
+                      bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imageData);
+                    } catch (IOException e) {
+                      e.printStackTrace();
+                    }
+                    
+                    try {
+                      RotateImage rotate = new RotateImage();
+                      bmp = rotate.HandleSamplingAndRotationBitmap(getApplicationContext(), imageData);
+                    } catch (Exception e) {
+                      System.out.println(e);
+                    }
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                    byte[] data = baos.toByteArray();
+
                     imagename
-                        .putFile(imageData)
+                        .putBytes(data)
                         .addOnSuccessListener(
                             new OnSuccessListener<UploadTask.TaskSnapshot>() {
                               @Override
