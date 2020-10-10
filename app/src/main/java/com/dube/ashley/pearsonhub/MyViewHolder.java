@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +37,5 @@ class MyViewHolder extends RecyclerView.ViewHolder
         wishlistPrice=itemView.findViewById(R.id.wishlistPrice);
         cardView3=(CardView) itemView.findViewById(R.id.cardViewWishlist_id);
         removeButton2 = (Button) itemView.findViewById(R.id.removeButton2);
-
-
     }
 }

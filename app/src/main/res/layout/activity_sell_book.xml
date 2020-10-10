@@ -30,14 +30,14 @@
                 android:layout_marginTop="0dp"
                 android:text="Book Details"
                 android:textColor="#000000"
-                android:textSize="30sp"
+                android:textSize="24dp"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/edit_collection"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="50dp"
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout

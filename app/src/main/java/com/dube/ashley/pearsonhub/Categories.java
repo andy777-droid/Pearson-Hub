@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
-import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +31,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -46,13 +43,12 @@ public class Categories extends AppCompatActivity
     private DrawerLayout mdrawer;
     private ActionBarDrawerToggle mToggle;
     private NavigationView navigationView;
-    private LinearLayout click1;
+
     //View Image from Database
     FirebaseRecyclerOptions<CategoryHandler> options;
     FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder> adapter;
-    DatabaseReference databaseReference,databaseReference2;
+    DatabaseReference databaseReference2;
     RecyclerView rv;
-    int myPosition;
     TextView catName;
 
     @Override
@@ -76,15 +72,14 @@ public class Categories extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#008aa3'> " +categoryName+ " </font>"));
         getSupportActionBar().setElevation(0);
+
         //Request Books
         rv=(RecyclerView) findViewById(R.id.recyclerview_id);
         rv.setNestedScrollingEnabled(false);
         rv.setLayoutManager(new GridLayoutManager(this,2));
 
-
         mToggle.setDrawerArrowDrawable(new Categories.HamburgerDrawable(this));
 
-        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference2 = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
         databaseReference2.addValueEventListener(new ValueEventListener()
@@ -107,7 +102,6 @@ public class Categories extends AppCompatActivity
                 Toast.makeText(Categories.this,error.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
-
 
         mToggle.setDrawerArrowDrawable(new HamburgerDrawable(this));
 
@@ -145,9 +139,7 @@ public class Categories extends AppCompatActivity
                 return true;
             }
         });
-
     }
-
 
     private void loadData(Context mContext, final String theCat, final String theEmail)
     {
@@ -208,7 +200,6 @@ public class Categories extends AppCompatActivity
         rv.setAdapter(adapter);
     }
 
-
     public class HamburgerDrawable extends DrawerArrowDrawable {
 
         public HamburgerDrawable(Context context) {
@@ -226,7 +217,6 @@ public class Categories extends AppCompatActivity
         }
     }
 
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (mToggle.onOptionsItemSelected(item)) {
@@ -234,6 +224,4 @@ public class Categories extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }

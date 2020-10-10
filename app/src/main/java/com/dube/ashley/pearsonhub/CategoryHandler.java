@@ -74,8 +74,6 @@ public class CategoryHandler
     }
 
     public String getPrice() {
-       // String bookPrice=String.valueOf(price);
-        //return bookPrice;
         return price;
     }
 

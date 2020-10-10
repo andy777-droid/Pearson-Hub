@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -15,15 +14,12 @@ import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,11 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -60,7 +52,6 @@ public class Book extends AppCompatActivity {
     FirebaseRecyclerOptions<CategoryHandler> options;
     FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder> adapter;
 
-    String userID, titl, is, au, cat, con, pri, nam, num, email;
     //progressBar
     private ProgressDialog mProgress;
 
@@ -98,9 +89,6 @@ public class Book extends AppCompatActivity {
         final String category = intent.getExtras().getString("category");
         final String email = intent.getExtras().getString("email");
 
-
-
-
         tvTitle.setText(title);
         tvPrice.setText("R " + price);
         tvSellerNumber.setText(sellerNumber);
@@ -116,8 +104,6 @@ public class Book extends AppCompatActivity {
             }
         });
         builder.build().load(image).into(img);
-        //img.setImageResource(image);
-
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -186,7 +172,6 @@ public class Book extends AppCompatActivity {
             }
         });
 
-
                 wishBtn.setOnClickListener(
                         new View.OnClickListener() {
                             @Override
@@ -230,16 +215,11 @@ public class Book extends AppCompatActivity {
                                                 new Intent(
                                                         Book.this, Wishlist.class);
                                         startActivity(i);
-
-
                                     }
                                 });
-
                             }
                         });
-
     }
-
 
     public class HamburgerDrawable extends DrawerArrowDrawable {
 
@@ -266,6 +246,4 @@ public class Book extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
