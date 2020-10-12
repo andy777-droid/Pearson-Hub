@@ -167,8 +167,8 @@ public class Book extends AppCompatActivity {
                         startActivity(sell);
                         return true;
                     case R.id.menu_wishlist:
-                        Intent Book = new Intent(Book.this, Book.class);
-                        startActivity(Book);
+                        Intent Wish = new Intent(Book.this, Wishlist.class);
+                        startActivity(Wish);
                         return true;
                     case R.id.menu_listings:
                         Intent listings = new Intent(Book.this, Listings.class);

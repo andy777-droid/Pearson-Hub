@@ -49,7 +49,7 @@ public class Wishlist extends AppCompatActivity {
     FirebaseRecyclerOptions<CategoryHandler> options;
     FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder> adapter;
     RecyclerView rv;
-
+    String curEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +70,7 @@ public class Wishlist extends AppCompatActivity {
                 View header = navigationView.getHeaderView(0);
                 TextView tv = (TextView) header.findViewById(R.id.id_nav_header);
                 tv.setText( curUsers.getFirstname()+" "+curUsers.getLastname());
+                curEmail=curUsers.getEmail();
                 loadData(Wishlist.this, curUsers.getEmail());
             }
 
@@ -181,6 +182,7 @@ public class Wishlist extends AppCompatActivity {
                         intent.putExtra("Author",catBooks.get(position).getAuthor());
                         intent.putExtra("Condition",catBooks.get(position).getCondition());
                         intent.putExtra("ISBN",catBooks.get(position).getISBN());
+                        intent.putExtra("email",curEmail);
                         myContext.startActivity(intent);
 
                     }
