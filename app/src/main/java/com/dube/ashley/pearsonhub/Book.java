@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,12 +16,14 @@ import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,8 +34,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -42,7 +49,7 @@ public class Book extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout mdrawer;
     private ActionBarDrawerToggle mToggle;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference, databaseReference2;
     private FirebaseUser user;
     private TextView tvTitle, tvPrice, tvSellerNumber, tvAuthor, tvCondition, tvISBN, tvSellerName;
     private ImageView img;
@@ -51,12 +58,15 @@ public class Book extends AppCompatActivity {
     List<CategoryHandler> catBooks;
     FirebaseRecyclerOptions<CategoryHandler> options;
     FirebaseRecyclerAdapter<CategoryHandler, MyViewHolder> adapter;
+    ArrayList<String> wishListEmails;
+    ArrayList<String> myList;
 
     //progressBar
     private ProgressDialog mProgress;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
 
@@ -65,6 +75,7 @@ public class Book extends AppCompatActivity {
         mProgress.setMessage("Please wait...");
         mProgress.setCancelable(false);
         mProgress.setIndeterminate(true);
+        databaseReference2=FirebaseDatabase.getInstance().getReference().child("Wishlist");
 
         wishBtn = (Button) findViewById(R.id.wishlistButton);
         tvTitle = (TextView) findViewById(R.id.textView);
@@ -172,53 +183,71 @@ public class Book extends AppCompatActivity {
             }
         });
 
-                wishBtn.setOnClickListener(
-                        new View.OnClickListener() {
+        wishBtn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mProgress.show();
+                        CheckBook(isbn, new FirebaseCallBack() {
                             @Override
-                            public void onClick(View v) {
-                                mProgress.show();
-                                String uuid = UUID.randomUUID().toString();
-                                final String uniqueID = uuid.replace("-", "");
+                            public void onCallback(ArrayList<String> list) {
+                                if (list.contains(email))
+                                {
+                                    mProgress.dismiss();
+                                    Toast.makeText(
+                                            Book.this,
+                                            "You already added this Book!",
+                                            Toast.LENGTH_SHORT)
+                                            .show();
 
+                                }
+                                else
+                                {
+                                    String uuid = UUID.randomUUID().toString();
+                                    final String uniqueID = uuid.replace("-", "");
 
-                                DatabaseReference imagestore =
-                                        FirebaseDatabase.getInstance()
-                                                .getReference()
-                                                .child("Wishlist")
-                                                .child(uniqueID);
+                                    DatabaseReference imagestore =
+                                            FirebaseDatabase.getInstance()
+                                                    .getReference()
+                                                    .child("Wishlist")
+                                                    .child(uniqueID);
 
-                                HashMap<String, String> hash = new HashMap<>();
-                                hash.put("ISBN", isbn);
-                                hash.put("author", author);
-                                hash.put("category", category);
-                                hash.put("condition", condition);
-                                hash.put("email", email);
-                                hash.put("price", price);
-                                hash.put("sellerName", sellerName);
-                                hash.put("sellerNumber", sellerNumber);
-                                hash.put("thumbnail", image);
-                                hash.put("title", title);
-                                hash.put("bookID", uniqueID);
+                                    HashMap<String, String> hash = new HashMap<>();
+                                    hash.put("ISBN", isbn);
+                                    hash.put("author", author);
+                                    hash.put("category", category);
+                                    hash.put("condition", condition);
+                                    hash.put("email", email);
+                                    hash.put("price", price);
+                                    hash.put("sellerName", sellerName);
+                                    hash.put("sellerNumber", sellerNumber);
+                                    hash.put("thumbnail", image);
+                                    hash.put("title", title);
+                                    hash.put("bookID", uniqueID);
 
-                                imagestore.setValue(hash).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
+                                    imagestore.setValue(hash).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
 
-                                        mProgress.dismiss();
+                                            mProgress.dismiss();
 
-                                        Toast.makeText(
-                                                Book.this,
-                                                "Uploaded",
-                                                Toast.LENGTH_SHORT)
-                                                .show();
-                                        Intent i =
-                                                new Intent(
-                                                        Book.this, Wishlist.class);
-                                        startActivity(i);
-                                    }
-                                });
+                                            Toast.makeText(
+                                                    Book.this,
+                                                    "Uploaded",
+                                                    Toast.LENGTH_SHORT)
+                                                    .show();
+                                            Intent i =
+                                                    new Intent(
+                                                            Book.this, Wishlist.class);
+                                            startActivity(i);
+                                        }
+                                    });
+
+                                }
                             }
                         });
+                    }
+                });
     }
 
     public class HamburgerDrawable extends DrawerArrowDrawable {
@@ -245,5 +274,40 @@ public class Book extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+   private void CheckBook(final String bookISBN, final FirebaseCallBack firebaseCallBack)
+   {
+       ValueEventListener eventListener = new ValueEventListener()
+       {
+           @Override
+           public void onDataChange(DataSnapshot dataSnapshot)
+           {
+               Boolean found;
+               wishListEmails=new ArrayList<>();
+               for(DataSnapshot ds : dataSnapshot.getChildren())
+               {
+                   String theISBN = ds.child("ISBN").getValue(String.class);
+                   found = theISBN.equals(bookISBN);
+                   if (found==true)
+                   {
+                       String email = ds.child("email").getValue(String.class);
+                       if(!wishListEmails.contains(email))
+                       {
+                           wishListEmails.add(email);
+                       }
+                   }
+               }
+               firebaseCallBack.onCallback(wishListEmails);
+           }
+
+           @Override
+           public void onCancelled(DatabaseError databaseError) {}
+       };
+       databaseReference2.addListenerForSingleValueEvent(eventListener);
+   }
+    private interface FirebaseCallBack
+    {
+        void onCallback(ArrayList<String> list);
     }
 }
