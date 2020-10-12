@@ -188,7 +188,7 @@ public class Book extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         mProgress.show();
-                        CheckBook(isbn, new FirebaseCallBack() {
+                        CheckBook(isbn,email, new FirebaseCallBack() {
                             @Override
                             public void onCallback(ArrayList<String> list) {
                                 if (list.contains(email))
@@ -199,7 +199,6 @@ public class Book extends AppCompatActivity {
                                             "You already added this Book!",
                                             Toast.LENGTH_SHORT)
                                             .show();
-
                                 }
                                 else
                                 {
@@ -276,36 +275,31 @@ public class Book extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-   private void CheckBook(final String bookISBN, final FirebaseCallBack firebaseCallBack)
-   {
-       ValueEventListener eventListener = new ValueEventListener()
-       {
-           @Override
-           public void onDataChange(DataSnapshot dataSnapshot)
-           {
-               Boolean found;
-               wishListEmails=new ArrayList<>();
-               for(DataSnapshot ds : dataSnapshot.getChildren())
-               {
-                   String theISBN = ds.child("ISBN").getValue(String.class);
-                   found = theISBN.equals(bookISBN);
-                   if (found==true)
-                   {
-                       String email = ds.child("email").getValue(String.class);
-                       if(!wishListEmails.contains(email))
-                       {
-                           wishListEmails.add(email);
-                       }
-                   }
-               }
-               firebaseCallBack.onCallback(wishListEmails);
-           }
+    public void CheckBook(final String bookISBN,final String theEmail, final FirebaseCallBack firebaseCallBack)
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Wishlist");
+        Query query = reference.orderByChild("ISBN").equalTo(bookISBN);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                wishListEmails = new ArrayList<>();
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        if(!wishListEmails.contains(theEmail))
+                        {
+                            wishListEmails.add(ds.child("email").getValue(String.class));
+                        }
+                    }
+                }
+                firebaseCallBack.onCallback(wishListEmails);
+            }
 
-           @Override
-           public void onCancelled(DatabaseError databaseError) {}
-       };
-       databaseReference2.addListenerForSingleValueEvent(eventListener);
-   }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     private interface FirebaseCallBack
     {
         void onCallback(ArrayList<String> list);
